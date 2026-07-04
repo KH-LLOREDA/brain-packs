@@ -1,0 +1,8 @@
+id: khlloreda-dns
+name: "khlloreda DNS (Arsys + DC)"
+version: 1.0.0
+description: >-
+  Gestión de DNS de khlloreda.com vía proxy-dns: registros externos (Arsys) e
+  internos (Windows Domain Controller, split-horizon). Conexión OpenAPI +
+  capability + skill para el agente basis. Específico de khlloreda.
+requires: []

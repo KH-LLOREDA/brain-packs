@@ -1,0 +1,5 @@
+agent_id: basis_agent
+add_allowed_capabilities: [dns_management]
+add_default_capabilities: []
+add_domain_tools: []
+add_skills: [khlloreda_dns_ops]

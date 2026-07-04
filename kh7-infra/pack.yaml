@@ -1,0 +1,8 @@
+id: kh7-infra
+name: "kh7 Infra (Vaultwarden)"
+version: 1.0.0
+description: >-
+  Integración de infraestructura del entorno kh7: gestión de credenciales vía
+  proxy-vaultwarden (conexión OpenAPI + capability + skill), pensada para el
+  agente basis. Específico de kh7.
+requires: []

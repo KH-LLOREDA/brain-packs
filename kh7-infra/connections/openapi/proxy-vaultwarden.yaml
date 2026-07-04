@@ -1,0 +1,9 @@
+name: "Proxy Vaultwarden"
+slug: proxy-vaultwarden
+description: "Proxy OpenAPI para gestión de credenciales (Vaultwarden) en kh7."
+# DNS interno estable del servicio (no la IP efímera del contenedor).
+spec_url: "http://brain-proxy-vaultwarden:3001/openapi.json"
+base_url: "https://proxy-vw.kh7.com"
+auth_type: bearer
+auth_token_env: PROXY_VW_TOKEN
+timeout: 30

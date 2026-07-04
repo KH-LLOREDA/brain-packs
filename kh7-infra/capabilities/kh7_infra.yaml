@@ -1,0 +1,19 @@
+id: kh7_infra
+description: "Gestión de credenciales en kh7 vía proxy-vaultwarden: estado/unlock, CRUD de ítems, y handles opacos (issue/resolve/inject) para no exponer secretos en claro."
+category: infra
+auto_load: false
+skills: [kh7_proxy_vw_ops]
+# 11 ids reales generados por la conexión OpenAPI 'proxy-vaultwarden' (verificados
+# contra la conexión viva de kh7).
+tools:
+  - proxy-vaultwarden_vw_status
+  - proxy-vaultwarden_vw_unlock
+  - proxy-vaultwarden_vw_lock
+  - proxy-vaultwarden_vw_list_items
+  - proxy-vaultwarden_vw_create_item
+  - proxy-vaultwarden_vw_get_item
+  - proxy-vaultwarden_vw_edit_item
+  - proxy-vaultwarden_vw_delete_item
+  - proxy-vaultwarden_vw_issue_handle
+  - proxy-vaultwarden_vw_resolve
+  - proxy-vaultwarden_vw_inject

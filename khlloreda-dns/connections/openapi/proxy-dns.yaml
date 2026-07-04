@@ -1,0 +1,9 @@
+name: "Proxy DNS"
+slug: proxy-dns
+description: "Orquestador DNS de khlloreda: Arsys (externo) + Windows DC (interno)."
+# Ajusta el puerto/host a tu despliegue de proxy-dns.
+spec_url: "http://brain-proxy-dns:8080/openapi.json"
+base_url: "http://brain-proxy-dns:8080"
+auth_type: bearer
+auth_token_env: PROXY_DNS_TOKEN
+timeout: 30

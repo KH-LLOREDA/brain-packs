@@ -1,0 +1,13 @@
+id: dns_management
+description: "Gestión de registros DNS de khlloreda.com (crear/leer/actualizar/eliminar A/CNAME/TXT) en Arsys (externo) y Windows DC (interno) vía proxy-dns."
+category: infra
+auto_load: false
+skills: [khlloreda_dns_ops]
+# IMPORTANTE: ids generados del spec OpenAPI (slug 'proxy-dns'). Verifícalos con
+# `infra_list_connections` tras crear la conexión y ajústalos si el spec cambia.
+tools:
+  - proxy-dns_list_records
+  - proxy-dns_get_record
+  - proxy-dns_create_record
+  - proxy-dns_update_record
+  - proxy-dns_delete_record

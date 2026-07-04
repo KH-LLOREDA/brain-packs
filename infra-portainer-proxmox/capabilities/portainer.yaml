@@ -1,0 +1,45 @@
+- id: portainer_read
+  description: "Lectura de infraestructura Docker/Portainer: environments, stacks, containers, imágenes, volúmenes, redes"
+  category: infra
+  auto_load: false
+  skills: []
+  tools:
+    - portainer_listEnvironments
+    - portainer_getEnvironment
+    - portainer_getDockerInfo
+    - portainer_listStacks
+    - portainer_getStack
+    - portainer_getStackFile
+    - portainer_getStackLogs
+    - portainer_listContainers
+    - portainer_inspectContainer
+    - portainer_getContainerLogs
+    - portainer_listImages
+    - portainer_inspectImage
+    - portainer_listVolumes
+    - portainer_listNetworks
+
+- id: portainer_admin
+  description: "Administración Docker/Portainer: crear/eliminar stacks, containers, imágenes, volúmenes, redes, exec"
+  category: infra
+  auto_load: false
+  requires: [portainer_read]
+  skills: [portainer_deploy]
+  tools:
+    - portainer_createStack
+    - portainer_updateStack
+    - portainer_deleteStack
+    - portainer_startStack
+    - portainer_stopStack
+    - portainer_createContainer
+    - portainer_removeContainer
+    - portainer_startContainer
+    - portainer_stopContainer
+    - portainer_execInContainer
+    - portainer_waitContainer
+    - portainer_removeImage
+    - portainer_pullImage
+    - portainer_createVolume
+    - portainer_removeVolume
+    - portainer_createNetwork
+    - portainer_removeNetwork

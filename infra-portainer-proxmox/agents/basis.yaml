@@ -1,0 +1,5 @@
+agent_id: basis_agent
+add_default_capabilities: [portainer_read, proxmox_read]
+add_allowed_capabilities: [portainer_admin, proxmox_admin]
+add_domain_tools: []
+add_skills: []
