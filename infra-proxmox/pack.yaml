@@ -1,0 +1,12 @@
+id: infra-proxmox
+name: "Infra: Proxmox (autocontenido)"
+version: 1.0.0
+description: >-
+  Despliega el proxy-proxmox como servicio del entorno, genera su API token
+  internamente (sin preguntar nada), cablea la conexión OpenAPI + capabilities y
+  trae un subagente dedicado (proxmox_operator) para operar Proxmox VE de forma
+  aislada. El proxy arranca vacío: las conexiones a los Proxmox reales se dan de
+  alta como día-2 con las tools proxmox_*Instance (skill proxmox_bootstrap).
+  A diferencia de infra-portainer-proxmox, este pack NO asume un proxy ya
+  desplegado ni parchea basis: lo levanta él mismo y aporta su propio agente.
+requires: []

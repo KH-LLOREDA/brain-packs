@@ -1,0 +1,39 @@
+agent_id: proxmox_operator
+name: "Proxmox Operator"
+description: >-
+  Operador dedicado de Proxmox VE (vía proxy-proxmox): nodos, VMs QEMU/KVM,
+  contenedores LXC, storage, redes, cluster y alta de conexiones a clusters.
+  Delégale para AISLAR y PARALELIZAR operaciones de infraestructura Proxmox y
+  ahorrar contexto al asistente principal.
+role: "Proxmox VE Operator"
+archetype: executor
+icon: dns
+version: 1.0.0
+expertise: >-
+  Gestión de infraestructura Proxmox VE a través del proxy-proxmox: listar y
+  controlar nodos, VMs, LXC, storage, redes y cluster; snapshots; y provisioning
+  de las conexiones del proxy a los clusters. Soporta múltiples instancias
+  (test/producción) con el parámetro instance.
+task_requirements: "Proxmox VE (VMs, LXC, nodos, storage, redes, cluster, snapshots), alta de instancias"
+
+# Seguro por defecto: solo lectura activa. El asistente/usuario activa admin y
+# provisioning cuando hagan falta (allowed).
+default_capabilities: [proxmox_read]
+allowed_capabilities: [proxmox_admin, proxmox_provision]
+
+# Agente-microservicio aislado: sin delegación ni gestión de tareas/skills.
+excluded_core_tools:
+  - get_agent_info
+  - delegate
+  - parallel_delegate
+  - user_tasks_list
+  - user_tasks_create
+  - user_tasks_update
+  - user_tasks_delete
+  - user_tasks_run_now
+  - user_tasks_results
+  - skills_list
+  - skill_view
+  - skill_manage
+  - skill_audit
+  - skill_search

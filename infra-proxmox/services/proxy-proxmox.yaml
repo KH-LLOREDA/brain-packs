@@ -1,0 +1,22 @@
+slug: proxy-proxmox
+# Imagen del proxy-proxmox (Node/Express + Angular embebido, puerto 3200).
+# Publícala en el registry con este nombre/tag o ajusta aquí.
+image: registry.khlloreda.es/brain-proxy-proxmox:1.0.0
+ports: [3200]
+# PROXMOX_PROXY_TOKEN lo GENERA Brain en la instalación (generate_secrets) y lo
+# inyecta como env; el proxy lo siembra en su tabla api_tokens al arrancar
+# (bootstrap) y Brain lo usa como credencial de la conexión. Cero preguntas.
+env: [PROXMOX_PROXY_TOKEN]
+generate_secrets: [PROXMOX_PROXY_TOKEN]
+healthcheck:
+  path: /health
+  port: 3200
+scope: shared
+provides:
+  connection:
+    kind: openapi
+    slug: proxmox
+    name: "Proxy Proxmox"
+    spec_path: /openapi.json
+    auth_type: bearer
+    auth_token_env: PROXMOX_PROXY_TOKEN
