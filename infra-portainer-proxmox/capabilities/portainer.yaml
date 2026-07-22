@@ -24,7 +24,7 @@
   category: infra
   auto_load: false
   requires: [portainer_read]
-  skills: [portainer_deploy]
+  skills: []
   tools:
     - portainer_createStack
     - portainer_updateStack
