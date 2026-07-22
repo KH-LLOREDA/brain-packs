@@ -1,9 +1,0 @@
-name: "Proxy Proxmox"
-slug: proxmox
-description: "Proxy OpenAPI para gestionar Proxmox VE (proxy-proxmox)."
-# El slug 'proxmox' hace que las tools generadas se llamen proxmox_*.
-spec_url: "http://brain-proxy-proxmox:8080/openapi.json"
-base_url: "http://brain-proxy-proxmox:8080"
-auth_type: bearer
-auth_token_env: PROXY_PROXMOX_TOKEN
-timeout: 30

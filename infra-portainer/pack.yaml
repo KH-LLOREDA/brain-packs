@@ -1,0 +1,9 @@
+id: infra-portainer
+name: "Infra: Portainer"
+version: 1.0.0
+description: >-
+  Conexión y capabilities para gestionar Docker vía Portainer a través del proxy
+  proxy-portainer. Instálalo SOLO en entornos que usen ese proxy; los que atacan
+  la API directamente no lo necesitan. (Proxmox vive ahora en el pack
+  autocontenido 'infra-proxmox'.)
+requires: []

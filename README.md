@@ -10,8 +10,9 @@ que creó.
 
 La configuración de agentes/capacidades/skills/herramientas ya no tiene por qué
 estar toda predefinida en el código del Engine. Lo específico de un entorno
-(p. ej. `proxy-portainer`/`proxy-proxmox`, la infra de kh7 con Vaultwarden, o el
-DNS de khlloreda) se empaqueta a parte y cada entorno instala solo lo que usa.
+(p. ej. `proxy-portainer` (pack `infra-portainer`), Proxmox autocontenido (pack
+`infra-proxmox`), la infra de kh7 con Vaultwarden, o el DNS de khlloreda) se
+empaqueta a parte y cada entorno instala solo lo que usa.
 
 ## Instalar un pack
 
@@ -19,7 +20,7 @@ Desde la GUI (admin) o vía API/tools del propio Brain:
 
 ```
 POST /api/v1/packs/install
-{ "repo_url": "https://github.com/KH-LLOREDA/brain-packs.git", "ref": "main", "subdir": "infra-portainer-proxmox" }
+{ "repo_url": "https://github.com/KH-LLOREDA/brain-packs.git", "ref": "main", "subdir": "infra-proxmox" }
 ```
 
 o pídeselo a Brain (agente basis, capability core `pack_management`):
@@ -34,7 +35,8 @@ o pídeselo a Brain (agente basis, capability core `pack_management`):
 <pack>/
   pack.yaml                     # manifest: id, name, version, description, requires
   capabilities/*.yaml           # capabilities (dict o lista de dicts)
-  agents/*.yaml                 # PATCHES a agentes existentes (no los reemplaza)
+  agents/*.yaml                 # PATCH a un agente existente (add_* )
+  agents/<id>/agent.yaml        # DEFINE un agente nuevo (source='pack') + prompts/
   skills/<name>/SKILL.md        # skills (frontmatter YAML + cuerpo markdown)
   connections/
     openapi/*.yaml              # plantilla de conexión OpenAPI (SIN secreto)
@@ -44,8 +46,8 @@ o pídeselo a Brain (agente basis, capability core `pack_management`):
 ### `pack.yaml`
 
 ```yaml
-id: infra-portainer-proxmox        # kebab/snake, único
-name: "Infra: Portainer & Proxmox"
+id: infra-portainer                # kebab/snake, único
+name: "Infra: Portainer"
 version: 1.0.0
 description: "..."
 requires: []                       # ids de otros packs

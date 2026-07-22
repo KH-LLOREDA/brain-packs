@@ -1,9 +1,0 @@
-id: infra-portainer-proxmox
-name: "Infra: Portainer & Proxmox"
-version: 1.0.0
-description: >-
-  Conexiones y capabilities para gestionar Docker (Portainer) y virtualización
-  (Proxmox VE) a través de los proxies proxy-portainer / proxy-proxmox. Instálalo
-  SOLO en entornos que usen estos proxies; los que atacan las APIs directamente
-  no lo necesitan.
-requires: []
