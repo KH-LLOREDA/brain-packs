@@ -1,0 +1,41 @@
+agent_id: portainer_operator
+name: "Portainer Operator"
+description: >-
+  Operador dedicado de infraestructura Docker vía Portainer (a través del
+  proxy-portainer): environments, stacks, containers, imágenes, volúmenes,
+  redes y alta de conexiones a servidores Portainer. Delégale para AISLAR y
+  PARALELIZAR operaciones de infraestructura Docker/Portainer y ahorrar contexto
+  al asistente principal.
+role: "Docker/Portainer Operator"
+archetype: executor
+icon: lan
+version: 1.0.0
+expertise: >-
+  Gestión de infraestructura Docker a través de Portainer y el proxy-portainer:
+  listar y controlar environments, stacks (deploy/update/start/stop/logs),
+  containers (create/exec/logs), imágenes, volúmenes y redes; y provisioning de
+  las conexiones del proxy a los servidores Portainer. Soporta múltiples
+  instancias (test/producción) con el parámetro instance.
+task_requirements: "Docker/Portainer (environments, stacks, containers, imágenes, volúmenes, redes), alta de instancias"
+
+# Seguro por defecto: solo lectura activa. El asistente/usuario activa admin y
+# provisioning cuando hagan falta (allowed).
+default_capabilities: [portainer_read]
+allowed_capabilities: [portainer_admin, portainer_provision]
+
+# Agente-microservicio aislado: sin delegación ni gestión de tareas/skills.
+excluded_core_tools:
+  - get_agent_info
+  - delegate
+  - parallel_delegate
+  - user_tasks_list
+  - user_tasks_create
+  - user_tasks_update
+  - user_tasks_delete
+  - user_tasks_run_now
+  - user_tasks_results
+  - skills_list
+  - skill_view
+  - skill_manage
+  - skill_audit
+  - skill_search

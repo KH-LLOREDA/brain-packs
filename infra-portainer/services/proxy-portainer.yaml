@@ -1,0 +1,22 @@
+slug: proxy-portainer
+# Imagen del proxy-portainer (Node/Express + Angular embebido, puerto 3100).
+# Publícala en el registry con este nombre/tag o ajusta aquí.
+image: registry.khlloreda.es/brain-proxy-portainer:1.0.0
+ports: [3100]
+# PROXY_PORTAINER_TOKEN lo GENERA Brain en la instalación (generate_secrets) y lo
+# inyecta como env; el proxy lo siembra en su tabla api_tokens al arrancar
+# (bootstrap) y Brain lo usa como credencial de la conexión. Cero preguntas.
+env: [PROXY_PORTAINER_TOKEN]
+generate_secrets: [PROXY_PORTAINER_TOKEN]
+healthcheck:
+  path: /health
+  port: 3100
+scope: shared
+provides:
+  connection:
+    kind: openapi
+    slug: portainer
+    name: "Proxy Portainer"
+    spec_path: /openapi.json
+    auth_type: bearer
+    auth_token_env: PROXY_PORTAINER_TOKEN

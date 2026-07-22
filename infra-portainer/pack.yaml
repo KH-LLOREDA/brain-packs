@@ -1,9 +1,12 @@
 id: infra-portainer
-name: "Infra: Portainer"
-version: 1.0.0
+name: "Infra: Portainer (autocontenido)"
+version: 2.0.0
 description: >-
-  Conexión y capabilities para gestionar Docker vía Portainer a través del proxy
-  proxy-portainer. Instálalo SOLO en entornos que usen ese proxy; los que atacan
-  la API directamente no lo necesitan. (Proxmox vive ahora en el pack
-  autocontenido 'infra-proxmox'.)
+  Despliega el proxy-portainer como servicio del entorno, genera su API token
+  internamente (sin preguntar nada), cablea la conexión OpenAPI + capabilities y
+  trae un subagente dedicado (portainer_operator) para operar infraestructura
+  Docker vía Portainer de forma aislada. El proxy arranca vacío: las conexiones
+  a los Portainer reales se dan de alta como día-2 con las tools
+  portainer_*Instance (skill portainer_bootstrap). Instálalo en entornos que
+  gestionen Docker a través de Portainer.
 requires: []

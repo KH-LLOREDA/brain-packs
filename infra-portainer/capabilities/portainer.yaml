@@ -43,3 +43,19 @@
     - portainer_removeVolume
     - portainer_createNetwork
     - portainer_removeNetwork
+
+# Provisioning de la config del propio proxy: alta/baja de conexiones a los
+# Portainer reales (día-2). Estas tools salen de /api/instances del proxy.
+- id: portainer_provision
+  description: "Gestión de las conexiones del proxy a instancias Portainer reales (dar de alta/baja/probar endpoints y API keys)"
+  category: infra
+  auto_load: false
+  skills: [portainer_bootstrap]
+  tools:
+    - portainer_listInstances
+    - portainer_listActiveInstances
+    - portainer_getInstance
+    - portainer_createInstance
+    - portainer_updateInstance
+    - portainer_deleteInstance
+    - portainer_testInstance
