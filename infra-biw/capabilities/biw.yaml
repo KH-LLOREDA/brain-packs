@@ -1,0 +1,23 @@
+# Capabilities del pack infra-biw. Las tools son las GENERADAS desde la conexión
+# OpenAPI 'biw' (una por operationId del proxy-biw): biw_<operationId>.
+- id: sap_biw_extraction
+  description: "Extracción y análisis de datos SAP BIW: queries BEx, InfoCubes, navegación multidimensional, P&L, ventas (vía proxy-biw)"
+  category: data
+  auto_load: false
+  skills: [sap_biw_analyst, biw_data_extraction]
+  tools:
+    - biw_listCatalogs
+    - biw_listQueries
+    - biw_getQueryMetadata
+    - biw_getDimensionValues
+    - biw_getQueryVariables
+    - biw_executeQuery
+    - biw_executeMdx
+
+- id: financial_kpi_analysis
+  description: "Análisis financiero: P&L, márgenes, ratios, comparativas interanuales, KPIs de negocio"
+  category: data
+  auto_load: false
+  skills: [financial_analysis, sales_analysis]
+  tools:
+    - generate_spreadsheet

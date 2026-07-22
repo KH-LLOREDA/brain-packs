@@ -1,0 +1,17 @@
+id: infra-biw
+name: "Infra: SAP BIW (autocontenido)"
+version: 1.0.0
+description: >-
+  Despliega el proxy-biw como servicio del entorno, genera su API token
+  internamente (sin preguntar nada), cablea la conexión OpenAPI (slug 'biw',
+  tools biw_*) + capabilities y trae un subagente dedicado (sap_analyst) para
+  analizar datos SAP BIW (queries BEx, P&L, ventas) de forma aislada.
+
+  Sustituye a las tools Python bi_*/bw_* que vivían en el core de Brain: ahora
+  las tools se generan desde el OpenAPI del propio proxy (una tool por
+  operationId). El conocimiento de dominio KH Lloreda (incl. la regla EAN ≠
+  código material) vive en el system_prompt del agente y en sus skills.
+
+  El acceso admin del proxy es seguro por defecto (deshabilitado; se recupera
+  por CLI) y la whitelist de queries se gestiona en el propio proxy (día-2).
+requires: []
