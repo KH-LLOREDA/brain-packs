@@ -3,7 +3,7 @@ slug: proxy-biw
 # La publica el CI del repo proxy-biw: rama main -> tag 'latest'. El tag debe
 # incluir la paridad de despliegue (ensureToken + admin seguro + jwtOrBearer +
 # operationIds en /openapi.json).
-image: registry.khlloreda.es/fuse-lowcode-proxy-biw:latest
+image: registry.khlloreda.es/proxy-biw:latest
 ports: [3000]
 # PROXY_BIW_TOKEN lo GENERA Brain en la instalación (generate_secrets) y lo
 # inyecta como env; el proxy lo siembra en su tabla api_tokens al arrancar
