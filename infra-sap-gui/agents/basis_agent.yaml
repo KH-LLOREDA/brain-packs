@@ -1,0 +1,7 @@
+# Patch al agente de infraestructura del core: quien mantiene el clúster es
+# quien construye y refresca la imagen dorada del pool, así que le damos acceso
+# al procedimiento. Como 'allowed' y no 'default': solo se carga cuando la tarea
+# va de aprovisionar SAP GUI, no en cada despliegue.
+agent_id: basis_agent
+add_allowed_capabilities:
+  - sap_gui_provisioning
