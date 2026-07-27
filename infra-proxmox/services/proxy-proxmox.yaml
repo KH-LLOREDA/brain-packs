@@ -12,6 +12,13 @@ healthcheck:
   path: /health
   port: 3200
 scope: shared
+# El proxy guarda su config.db (nodos Proxmox, credenciales de API, api_tokens) en
+# CONFIG_DATA_DIR=/app/data. Sin volumen vive en la capa efímera y se pierde al
+# actualizar el pack o recrear el contenedor.
+volumes:
+  - name: pack-proxy-proxmox-data
+    target: /app/data
+restart: unless-stopped
 provides:
   connection:
     kind: openapi
