@@ -1,0 +1,22 @@
+id: infra-sap-gui
+name: "Infra: SAP GUI (Windows sobre Proxmox)"
+version: 1.0.0
+description: >-
+  Aporta la capacidad de OPERAR SAP: transacciones, pantallas y formularios de
+  SAP GUI for Windows, conducidos por scripting (no por píxeles) desde el
+  subagente sap_s4_operator.
+
+  El runtime no es un contenedor sino un pool de máquinas Windows en Proxmox:
+  cada usuario recibe una VM con su sesión SAP GUI aislada, servida por el MCP
+  del guest, y al soltarla la VM se recicla revirtiendo a un snapshot limpio.
+  El pack declara la política del pool (VMs calientes, reciclado, puertos) y la
+  registra donde el Engine ya la busca; el acceso al hipervisor y el id de la
+  plantilla son del entorno y se completan en Configuración › Sandbox.
+
+  El pack NO fabrica la plantilla: instalar Windows y SAP GUI dentro de la
+  imagen dorada es un procedimiento de infraestructura, y viene documentado paso
+  a paso en la skill sap_gui_golden_image.
+
+  Sustituye al subagente sap_s4_operator que vivía en el core de Brain: quien
+  no tenga SAP deja de arrastrar un agente que no puede usar.
+requires: []

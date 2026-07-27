@@ -1,0 +1,10 @@
+# Capability de infraestructura del pack: no aporta tools (las de operación son
+# las mcp_sap_* que publica el guest en caliente, y ya las lleva el subagente en
+# sus domain_tools), sino el conocimiento para construir y mantener la imagen
+# dorada de la que clona el pool.
+- id: sap_gui_provisioning
+  description: "Provisión y mantenimiento del pool de VMs Windows con SAP GUI: imagen dorada, plantilla Proxmox, snapshot de reciclado"
+  category: infra
+  auto_load: false
+  skills: [sap_gui_golden_image]
+  tools: []

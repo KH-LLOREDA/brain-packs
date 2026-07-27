@@ -1,0 +1,59 @@
+agent_id: sap_s4_operator
+name: "SAP S/4 Operator"
+description: >-
+  Operación en SAP GUI (transacciones MM/FI/SD/PP/CO, pantallas, formularios)
+  vía MCP/VNC. Delégale por su SESIÓN SAP GUI dedicada; devuelve los datos
+  extraídos, no la navegación.
+role: "Operador SAP S/4 HANA"
+archetype: executor
+icon: terminal
+version: 2.0.0
+expertise: >-
+  Experto en SAP GUI: navegación de transacciones (MM, FI, SD, PP, CO),
+  interacción visual con la interfaz, extracción de datos de pantalla, y
+  automatización de procesos SAP mediante MCP.
+task_requirements: >-
+  Operar en SAP GUI: ejecutar transacciones, consultar datos, navegar pantallas,
+  rellenar formularios, extraer información.
+
+# Las tools mcp_sap_* las publica el MCP que corre DENTRO de la VM del pool: no
+# existen en el catálogo hasta que el Engine adquiere una máquina y conecta su
+# MCP, cosa que hace justo antes de ejecutar este agente.
+domain_tools:
+  - vnc_screenshot
+  - mcp_sap_sap_navigate
+  - mcp_sap_sap_session_info
+  - mcp_sap_sap_get_window
+  - mcp_sap_sap_get_fields
+  - mcp_sap_sap_get_tabs
+  - mcp_sap_sap_set_field
+  - mcp_sap_sap_get_buttons
+  - mcp_sap_sap_click_button
+  - mcp_sap_sap_select_tab
+  - mcp_sap_sap_press_key
+  - mcp_sap_sap_read_grid
+  - mcp_sap_sap_read_list
+  - mcp_sap_sap_modify_cell
+  - mcp_sap_sap_fill_form
+  - mcp_sap_sap_find_element
+  - mcp_sap_sap_get_tree
+  - mcp_sap_sap_get_menus
+  - mcp_sap_sap_select_menu
+  - mcp_sap_sap_win_dialogs
+  - mcp_sap_sap_win_click
+  - mcp_sap_sap_win_keys
+  - mcp_sap_sap_list_files
+  - mcp_sap_sap_fetch_file
+  - import_sap_file
+
+# Opera dentro de SAP, no en el host ni en internet: buscar en la web o tocar
+# ficheros locales no es su trabajo y solo abre superficie de error.
+excluded_core_tools:
+  - web_search
+  - web_fetch
+  - shell
+  - read_file
+  - write_file
+  - edit_file
+  - list_directory
+  - search_files

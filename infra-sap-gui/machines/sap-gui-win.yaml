@@ -1,0 +1,46 @@
+# Pool de VMs Windows con SAP GUI, clonadas de una plantilla de Proxmox.
+#
+# Sobre los valores del ENTORNO (url, token, id de plantilla): aquí solo van los
+# NOMBRES de las variables. Normalmente esas variables viven en el host del
+# workspace-manager, no en el proceso que instala el pack, así que lo habitual es
+# que la instalación deje el pool declarado pero pendiente y se complete en
+# Configuración › Sandbox. Es lo esperado: el token de Proxmox es del entorno.
+slug: sap-gui-win
+kind: proxmox-pool
+name: "Pool SAP GUI (Windows)"
+description: >-
+  VMs Windows con SAP GUI y el MCP de scripting, una por usuario con sesión SAP
+  aislada. Se clonan de la imagen dorada y se reciclan al snapshot 'clean'.
+
+connection:
+  url_env: PROXMOX_URL
+  token_id_env: PROXMOX_TOKEN_ID
+  token_secret_env: PROXMOX_TOKEN_SECRET
+  node_env: PROXMOX_NODE
+
+template:
+  # VMID de la imagen dorada: distinto en cada instalación, nunca en el pack.
+  id_env: PROXMOX_WIN_TEMPLATE_ID
+  storage_env: PROXMOX_VM_STORAGE
+  target_node_env: PROXMOX_VM_TARGET_NODE
+  # Al soltar la VM se revierte a este snapshot, así ninguna sesión hereda datos
+  # ni la sesión SAP de quien la usó antes. Debe existir en la plantilla.
+  snapshot: clean
+  full_clone: false
+
+pool:
+  prefix: sap-win-
+  # Una VM caliente cubre el caso normal (un usuario a la vez) sin que nadie
+  # espere el arranque de Windows; el resto se clonan bajo demanda hasta 'max'.
+  warm: 1
+  min: 1
+  max: 3
+  # Windows arrancado consume recursos del clúster: se recupera la VM tras media
+  # hora sin actividad. 0 desactivaría la recuperación.
+  idle_minutes: 30
+  max_session_minutes: 0
+  destroy_on_release: false
+
+guest:
+  mcp_port: 3001
+  vnc_port: 6080
