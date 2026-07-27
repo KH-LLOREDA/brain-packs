@@ -12,6 +12,13 @@ healthcheck:
   path: /health
   port: 3100
 scope: shared
+# El proxy guarda su config.db (endpoints de Portainer, credenciales, api_tokens)
+# en CONFIG_DATA_DIR=/app/data. Sin volumen vive en la capa efímera y se pierde al
+# actualizar el pack o recrear el contenedor.
+volumes:
+  - name: pack-proxy-portainer-data
+    target: /app/data
+restart: unless-stopped
 provides:
   connection:
     kind: openapi
