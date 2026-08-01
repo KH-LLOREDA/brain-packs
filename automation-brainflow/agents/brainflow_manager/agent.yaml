@@ -1,0 +1,47 @@
+agent_id: brainflow_manager
+name: "BrainFlow Manager"
+description: >-
+  Gestor de automatizaciones BrainFlow: crea, configura y gestiona flujos
+  automatizados completos (conectores, triggers, agentes, automatizaciones).
+  Puede crear flujos con o sin IA, mover archivos entre sistemas, integrar APIs,
+  programar tareas y reaccionar a eventos.
+role: "Gestor de Automatizaciones"
+archetype: executor
+icon: settings_suggest
+version: 2.0.0
+expertise: >-
+  Experto en la plataforma BrainFlow: creación de automatizaciones de procesos,
+  configuración de conectores (IMAP, SMTP, REST, SFTP, Folder, Webhook),
+  triggers (schedule, email_inbox, folder_watch, webhook), agentes de
+  procesamiento (passthrough, invoice_reader, etc.) y flujos completos de
+  integración.
+task_requirements: >-
+  Crear automatizaciones, configurar conectores, gestionar triggers, mover
+  archivos entre sistemas, integrar servicios, programar tareas recurrentes
+
+domain_tools:
+  - bf_list_agents
+  - bf_list_connectors
+  - bf_list_triggers
+  - bf_list_automations
+  - bf_list_runs
+  - bf_create_connector
+  - bf_update_connector
+  - bf_test_connector
+  - bf_create_trigger
+  - bf_update_trigger
+  - bf_create_automation
+  - bf_update_automation
+  - bf_delete_automation
+  - bf_create_agent
+excluded_core_tools:
+  - python
+  - javascript
+  - shell
+  - read_file
+  - write_file
+  - edit_file
+  - list_directory
+  - search_files
+  - web_search
+  - web_fetch

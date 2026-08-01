@@ -1,0 +1,16 @@
+id: data-databricks
+name: "Data: Databricks"
+version: 1.0.0
+description: >-
+  Trae el subagente dedicado Databricks (databricks_analyst) y la capability
+  databricks_query: SQL Warehouse, Unity Catalog, schemas, tablas y jobs/ETL
+  vía las tools db_* conectadas a proxy-databricks.
+
+  Las tools db_* siguen en el core de Brain (no dependen del pack); este pack
+  aporta el agente para AISLAR consultas/extracciones grandes, la capability
+  cargable y el conocimiento de dominio (skill databricks_analyst). El análisis
+  tabular genérico (capability core tabular_data_analysis, skill data_analysis)
+  permanece en el core. La conexión a Databricks se resuelve por la
+  configuración del entorno (proxy-databricks), no viaja en el pack.
+requires: []
+requires_brain: ">=3.0.0"

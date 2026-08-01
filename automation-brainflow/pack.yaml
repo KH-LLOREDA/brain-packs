@@ -1,0 +1,13 @@
+id: automation-brainflow
+name: "Automation: BrainFlow"
+version: 1.0.0
+description: >-
+  Trae el subagente dedicado BrainFlow (brainflow_manager): crea y gestiona
+  automatizaciones completas (conectores, triggers, agentes de procesamiento y
+  flujos) vía las tools bf_*.
+
+  Las tools bf_* viven en el core de Brain y operan contra la plataforma
+  BrainFlow del entorno; este pack aporta el agente gestor. El acceso a
+  BrainFlow se resuelve por la configuración del entorno, no viaja en el pack.
+requires: []
+requires_brain: ">=3.0.0"
