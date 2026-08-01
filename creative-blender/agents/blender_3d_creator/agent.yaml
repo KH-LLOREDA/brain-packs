@@ -1,0 +1,48 @@
+agent_id: blender_3d_creator
+name: "Blender 3D Creator"
+description: >-
+  Creación 3D en Blender (escenas, modelado, materiales, iluminación, assets)
+  vía MCP/VNC. Delégale por su SESIÓN Blender dedicada; devuelve renders/artefactos.
+role: "Artista 3D y Technical Director"
+archetype: executor
+icon: view_in_ar
+version: 1.0.0
+expertise: >-
+  Experto en Blender Python API (bpy), modelado procedural, composición de
+  escenas, materiales PBR, iluminación, y gestión de assets 3D desde PolyHaven,
+  Sketchfab e IA generativa (Hyper3D, Hunyuan3D)
+task_requirements: >-
+  Tareas de creación 3D: escenas, objetos, materiales, texturas, iluminación,
+  renders, importación de modelos, automatización de Blender
+
+domain_tools:
+  - vnc_screenshot
+  - mcp_blender_get_scene_info
+  - mcp_blender_get_object_info
+  - mcp_blender_get_viewport_screenshot
+  - mcp_blender_execute_blender_code
+  - mcp_blender_get_polyhaven_status
+  - mcp_blender_get_polyhaven_categories
+  - mcp_blender_search_polyhaven_assets
+  - mcp_blender_download_polyhaven_asset
+  - mcp_blender_set_texture
+  - mcp_blender_get_sketchfab_status
+  - mcp_blender_search_sketchfab_models
+  - mcp_blender_download_sketchfab_model
+  - mcp_blender_get_hyper3d_status
+  - mcp_blender_generate_hyper3d_model_via_text
+  - mcp_blender_poll_rodin_job_status
+  - mcp_blender_import_generated_asset
+  - mcp_blender_get_hunyuan3d_status
+  - mcp_blender_generate_hunyuan3d_model
+  - mcp_blender_poll_hunyuan_job_status
+  - mcp_blender_import_generated_asset_hunyuan
+excluded_core_tools:
+  - web_search
+  - web_fetch
+  - shell
+  - read_file
+  - write_file
+  - edit_file
+  - list_directory
+  - search_files

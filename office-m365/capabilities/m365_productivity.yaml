@@ -1,0 +1,61 @@
+# Capability del pack office-m365. Las tools m365_* / user_tasks_* viven en el
+# core de Brain; aquí se agrupan como capacidad cargable + sus skills de dominio.
+- id: m365_productivity
+  description: >-
+    Microsoft 365 / Office 365: correo (Outlook), calendario y agenda, OneDrive,
+    Teams, directorio Azure AD y tareas programadas. Usar para 'mi agenda del
+    día', leer/enviar correos, eventos de calendario, configurar el 'Fuera de la
+    oficina' / respuestas automáticas de Outlook, buscar archivos en OneDrive,
+    mensajes de Teams o usuarios del directorio.
+  category: office
+  auto_load: false
+  skills: [m365_productivity, calendar_teams, email_management]
+  tools:
+    - m365_mail_list
+    - m365_mail_get
+    - m365_mail_attachments
+    - m365_mail_folders
+    - m365_mail_send
+    - m365_mail_reply
+    - m365_mail_forward
+    - m365_mail_mark
+    - m365_mail_move
+    - m365_mail_delete
+    - m365_mail_get_attachment
+    - m365_get_automatic_replies
+    - m365_set_automatic_replies
+    - m365_calendar_list
+    - m365_calendar_events
+    - m365_calendar_create_event
+    - m365_calendar_respond
+    - m365_calendar_cancel_event
+    - m365_calendar_get_schedule
+    - m365_onedrive_root
+    - m365_onedrive_list
+    - m365_onedrive_search
+    - m365_onedrive_upload
+    - m365_onedrive_upload_artifact
+    - m365_onedrive_create_folder
+    - m365_onedrive_delete
+    - m365_onedrive_share
+    - m365_onedrive_get_item
+    - m365_onedrive_list_folder
+    - m365_onedrive_download
+    - m365_onedrive_rename
+    - m365_onedrive_move
+    - m365_onedrive_copy
+    - m365_teams_list
+    - m365_teams_chats
+    - m365_teams_channels
+    - m365_teams_members
+    - m365_teams_channel_messages
+    - m365_teams_send_message
+    - m365_directory_users
+    - m365_directory_groups
+    - m365_directory_group_members
+    - user_tasks_list
+    - user_tasks_create
+    - user_tasks_update
+    - user_tasks_delete
+    - user_tasks_run_now
+    - user_tasks_results

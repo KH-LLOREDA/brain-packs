@@ -1,0 +1,15 @@
+id: office-m365
+name: "Office: Microsoft 365"
+version: 1.0.0
+description: >-
+  Trae el subagente dedicado Microsoft 365 (m365_assistant) y la capability
+  m365_productivity: correo (Outlook), calendario/agenda, OneDrive, Teams y
+  directorio Azure AD vía Microsoft Graph, además de tareas programadas.
+
+  Las tools m365_* / user_tasks_* siguen en el core de Brain (no dependen del
+  pack); este pack aporta el agente con sus CREDENCIALES/sesión M365 dedicadas,
+  la capability para cargarla al vuelo y el conocimiento de dominio (skills).
+  El acceso Graph se resuelve por la configuración OAuth de cada usuario en
+  Configuración › Integraciones, no viaja en el pack.
+requires: []
+requires_brain: ">=3.0.0"

@@ -14,6 +14,26 @@ estar toda predefinida en el código del Engine. Lo específico de un entorno
 `infra-proxmox`), la infra de kh7 con Vaultwarden, o el DNS de khlloreda) se
 empaqueta a parte y cada entorno instala solo lo que usa.
 
+## Catálogo
+
+**Infra / entorno** (servicios, conexiones, VMs):
+
+- `infra-biw` — proxy-biw + subagente `sap_analyst` (datos SAP BIW).
+- `infra-sap-gui` — pool de VMs Windows + subagente `sap_s4_operator` (SAP GUI).
+- `infra-portainer` / `infra-proxmox` — Docker (Portainer) y virtualización (Proxmox) para `basis_agent`.
+- `kh7-infra` / `khlloreda-dns` — infra específica de KH Lloreda.
+
+**Aplicación** (agente + capability + skills; extraídos del core en v3 — sus tools
+siguen en el core de Brain, el pack aporta el agente/capacidad/conocimiento):
+
+- `office-m365` — `m365_assistant` + capability `m365_productivity` (Microsoft 365 / Graph).
+- `data-databricks` — `databricks_analyst` + capability `databricks_query` (Databricks Lakehouse).
+- `creative-blender` — `blender_3d_creator` (creación 3D en Blender vía MCP/VNC).
+- `automation-brainflow` — `brainflow_manager` (automatizaciones BrainFlow, tools `bf_*`).
+
+> Los agentes de investigación web y RAG **no** son packs: en v3 se resuelven como
+> agentes dinámicos (`spawn_agent` + `load_capability("web_research"|"knowledge_base")`).
+
 ## Instalar un pack
 
 Desde la GUI (admin) o vía API/tools del propio Brain:

@@ -1,0 +1,15 @@
+id: creative-blender
+name: "Creative: Blender 3D"
+version: 1.0.0
+description: >-
+  Trae el subagente dedicado Blender 3D (blender_3d_creator): creación de
+  escenas, modelado, materiales PBR, iluminación y gestión de assets (PolyHaven,
+  Sketchfab, Hyper3D, Hunyuan3D) vía las tools mcp_blender_* y VNC.
+
+  Las tools mcp_blender_* / vnc_screenshot viven en el core de Brain y operan
+  contra un servidor Blender+MCP del entorno; este pack aporta el agente con su
+  SESIÓN Blender dedicada y el conocimiento de dominio (skills). La conexión MCP
+  al Blender se configura en el entorno (Configuración › Sandbox/MCP), no viaja
+  en el pack.
+requires: []
+requires_brain: ">=3.0.0"

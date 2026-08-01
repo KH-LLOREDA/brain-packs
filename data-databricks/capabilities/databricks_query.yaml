@@ -1,0 +1,16 @@
+# Capability del pack data-databricks. Las tools db_* viven en el core de Brain;
+# aquí se agrupan como capacidad cargable + su skill de dominio.
+- id: databricks_query
+  description: "Consultas Databricks: SQL Warehouse, Unity Catalog, schemas, tablas, jobs ETL"
+  category: data
+  auto_load: false
+  skills: [databricks_analyst]
+  tools:
+    - db_list_catalogs
+    - db_list_schemas
+    - db_list_tables
+    - db_get_table_info
+    - db_execute_sql
+    - db_describe_query
+    - db_list_jobs
+    - db_get_job_status

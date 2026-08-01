@@ -1,0 +1,30 @@
+agent_id: databricks_analyst
+name: "Databricks Analyst"
+description: >-
+  Datos Databricks (SQL Warehouse, Unity Catalog, jobs, ETL) vía
+  proxy-databricks. Delégale para AISLAR consultas/extracciones grandes y
+  recibir solo el resultado/spreadsheet.
+role: "Analista de Datos Databricks"
+archetype: executor
+icon: storage
+version: 1.0.0
+expertise: >-
+  Experto en extracción y análisis de datos en Databricks Lakehouse usando
+  herramientas db_* conectadas a proxy-databricks
+task_requirements: "Consultas sobre datos en Databricks: SQL, tablas, catalogos, schemas, jobs, pipelines ETL"
+
+default_capabilities: [databricks_query]
+allowed_capabilities: [tabular_data_analysis]
+
+domain_tools:
+  - db_list_catalogs
+  - db_list_schemas
+  - db_list_tables
+  - db_get_table_info
+  - db_execute_sql
+  - db_describe_query
+  - db_list_jobs
+  - db_get_job_status
+  - db_run_job
+  - db_get_run_status
+  - generate_spreadsheet
