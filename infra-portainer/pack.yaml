@@ -1,6 +1,6 @@
 id: infra-portainer
 name: "Infra: Portainer (autocontenido)"
-version: 2.0.0
+version: 2.0.1
 description: >-
   Despliega el proxy-portainer como servicio del entorno, genera su API token
   internamente (sin preguntar nada), cablea la conexión OpenAPI + capabilities y
