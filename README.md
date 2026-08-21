@@ -27,6 +27,7 @@ empaqueta a parte y cada entorno instala solo lo que usa.
 siguen en el core de Brain, el pack aporta el agente/capacidad/conocimiento):
 
 - `office-m365` — `m365_assistant` + capability `m365_productivity` (Microsoft 365 / Graph).
+- `apps-khlloreda-strapi` — `khlloreda_assistant` + capability `khlloreda_apps` (Producteca, fichajes/horas propios y menú de comedor vía Strapi).
 - `data-databricks` — `databricks_analyst` + capability `databricks_query` (Databricks Lakehouse).
 - `creative-blender` — `blender_3d_creator` (creación 3D en Blender vía MCP/VNC).
 - `automation-brainflow` — `brainflow_manager` (automatizaciones BrainFlow, tools `bf_*`).

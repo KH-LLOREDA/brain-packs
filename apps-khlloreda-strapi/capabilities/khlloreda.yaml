@@ -1,0 +1,20 @@
+id: khlloreda_apps
+description: >
+  Apps internas de KH-LLOREDA (backend Strapi): Producteca (catálogo de
+  productos químicos, MPQs, clasificación GHS, comparativas), GAD limitado
+  a los fichajes y horas del propio usuario, y el menú/pedido de comida (hoy o
+  la semana en curso).
+  No incluye fichajes ni menús de terceros, empresas, CAE ni directorio.
+category: data
+auto_load: false
+skills:
+  - khlloreda_apps_usage
+tools:
+  - khlloreda_buscar_productos
+  - khlloreda_ver_producto
+  - khlloreda_buscar_mpqs
+  - khlloreda_listar_comparativas
+  - khlloreda_fichajes
+  - khlloreda_menu_hoy
+  - khlloreda_menu_semana
+requires: []

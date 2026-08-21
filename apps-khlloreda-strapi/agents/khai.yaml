@@ -1,0 +1,8 @@
+# Permite a Khai cargar la capability on demand (load_capability).
+# No la auto-carga: las consultas de catálogo/accesos se delegan al subagente
+# del pack o se cargan cuando el usuario las pide.
+agent_id: khai
+add_allowed_capabilities:
+  - khlloreda_apps
+add_skills:
+  - khlloreda_apps_usage

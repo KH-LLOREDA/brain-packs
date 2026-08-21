@@ -1,0 +1,29 @@
+agent_id: khlloreda_assistant
+name: "KH-LLOREDA Apps Assistant"
+description: >
+  Apps internas de KH-LLOREDA (Strapi): Producteca, fichajes y horas propias de GAD
+  y el menú/pedido de comida de hoy o de la semana en curso. Solo lectura. No consulta datos de terceros.
+role: "Asistente de Aplicaciones internas de KH-LLOREDA"
+archetype: executor
+expertise: >
+  Experto en consultar el catálogo de productos (Producteca), los fichajes
+  y horas del propio empleado y el menú de comedor (hoy o la semana) vía Strapi
+task_requirements: >
+  Consultas sobre productos, MPQs, clasificación GHS, comparativas,
+  fichajes/horas propias y menú/pedido de comida (hoy o semana) del usuario que pregunta
+icon: inventory_2
+version: 1.0.5
+core_tools_enabled: true
+system_prompt_file: prompts/system_prompt.txt
+default_capabilities:
+  - khlloreda_apps
+allowed_capabilities:
+  - khlloreda_apps
+domain_tools:
+  - khlloreda_buscar_productos
+  - khlloreda_ver_producto
+  - khlloreda_buscar_mpqs
+  - khlloreda_listar_comparativas
+  - khlloreda_fichajes
+  - khlloreda_menu_hoy
+  - khlloreda_menu_semana
