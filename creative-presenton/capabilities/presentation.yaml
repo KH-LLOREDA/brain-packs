@@ -13,11 +13,18 @@
     - presenton_generate_presentation_async
     - presenton_get_presentation_generation_status
     - presenton_export_presentation
+    - presenton_get_presentation
+    - presenton_edit_slide
+    - presenton_edit_slide_html
+    - presenton_update_slide
+    - presenton_update_presentation
   requires: [image_generation]
   examples: >-
     CONTRATO — PRESENTON (autonomía media):
     1) presenton_generate_presentation (o _async + poll) con el brief.
     2) Artefacto handler=presenton; el editor es el embed.
-    3) Retocar = tools de Presenton, no apply_patch sobre un .html.
+    3) Retocar desde el iframe = turno en este agente (no CUSTOM_LLM).
+       get_presentation → edit_slide / update_slide. Imágenes: generate_image
+       (hub Brain) y luego update_slide. No regeneres el deck.
     4) Export PPTX/PDF = presenton_export_presentation.
     NUNCA slides_begin/slides_add/slides_finalize para este contrato.

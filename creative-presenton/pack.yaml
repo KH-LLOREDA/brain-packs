@@ -8,6 +8,6 @@ description: >-
   creative-slides y office-pptx.
 
   Las tools presenton_* salen de la conexión OpenAPI del servicio.
-  Imagen registry.khlloreda.es/presenton:0.1.0.
+  Imagen registry.khlloreda.es/presenton:0.1.2.
 requires: []
 requires_brain: ">=3.1.0"

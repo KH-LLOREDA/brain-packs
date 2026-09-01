@@ -45,4 +45,13 @@ Decks antiguos en Reveal se abren con el handler builtin. No los migres a Presen
 
 ## Imágenes
 
-Portadas e ilustraciones: capability `image_generation` del hub Brain, luego pásalas a Presenton. No dejes placeholders inventados.
+Portadas e ilustraciones: capability `image_generation` del hub Brain, luego pásalas a Presenton (`presenton_update_slide` / `presenton_edit_slide`). No dejes placeholders inventados.
+
+## Pedidos desde el iframe
+
+El generate del editor embebido **no** usa el LLM de Presenton. Llega como turno tuyo (chat de la mesa) con `presentation_id` / slide visible. Entonces:
+
+1. `presenton_get_presentation` con ese id.
+2. Cambio local: `presenton_edit_slide` (prompt) o `presenton_update_slide`.
+3. Imagen: `generate_image` del hub y sustituye el asset en la slide.
+4. No llames `presenton_generate_presentation` para un retoque.
