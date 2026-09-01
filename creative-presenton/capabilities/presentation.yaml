@@ -1,0 +1,23 @@
+# Capability del pack: NO pisa presentation_design del core (Reveal).
+# El coordinador enruta por autonomía / plantilla, no por un id único.
+- id: presentation_presenton
+  description: >-
+    Presentaciones colaborativas con Presenton (layouts Template V2 o
+    modo smart). Delégalo en presenton_designer. No uses slides_* ni
+    OnlyOffice para crear este deck.
+  category: media
+  auto_load: false
+  skills: [presenton_layouts]
+  tools:
+    - presenton_generate_presentation
+    - presenton_generate_presentation_async
+    - presenton_get_presentation_generation_status
+    - presenton_export_presentation
+  requires: [image_generation]
+  examples: >-
+    CONTRATO — PRESENTON (autonomía media):
+    1) presenton_generate_presentation (o _async + poll) con el brief.
+    2) Artefacto handler=presenton; el editor es el embed.
+    3) Retocar = tools de Presenton, no apply_patch sobre un .html.
+    4) Export PPTX/PDF = presenton_export_presentation.
+    NUNCA slides_begin/slides_add/slides_finalize para este contrato.

@@ -1,0 +1,20 @@
+- id: presentation_office
+  description: >-
+    Presentación PowerPoint ya abierta (o subida) en OnlyOffice. Contrato
+    de ayuda: el usuario pinta; tú cambias textos, slides y gráficos
+    puntuales vía el Bridge. No generes un deck entero desde un brief.
+  category: office
+  auto_load: false
+  skills: [pptx_assist]
+  tools:
+    - mcp_onlyoffice_bridge_editor_get_info
+    - mcp_onlyoffice_bridge_presentation_get_slides
+    - mcp_onlyoffice_bridge_presentation_add_slide
+    - mcp_onlyoffice_bridge_presentation_set_text
+    - mcp_onlyoffice_bridge_presentation_insert_chart
+  examples: >-
+    CONTRATO — POWERPOINT (autonomía baja):
+    1) El usuario abre o sube un .pptx (handler=office).
+    2) Tú lees el deck con presentation_get_slides y aplicas cambios
+       puntuales (set_text, add_slide, insert_chart).
+    3) No uses slides_* ni presenton_* . No inventes un deck de cero.

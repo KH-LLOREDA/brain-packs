@@ -1,0 +1,10 @@
+id: creative-slides
+name: "Creative: Presentación web"
+version: 0.1.0
+description: >-
+  Presentaciones HTML Reveal en el workspace (autonomía alta: el agente
+  construye, tú diriges). Aporta la capability presentation_web y la
+  plantilla «Presentación web» de Crear artefacto. Las tools slides_*
+  siguen en el core; este pack es la puerta de producto, no un runtime.
+requires: []
+requires_brain: ">=3.1.0"

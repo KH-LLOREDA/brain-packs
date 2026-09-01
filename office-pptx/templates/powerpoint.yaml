@@ -1,0 +1,25 @@
+id: slides.powerpoint
+name: Presentación PowerPoint
+description: >-
+  PPTX en OnlyOffice. El documento es tuyo; la IA asiste con cambios
+  puntuales. Parte de un fichero o de una plantilla vacía, no de un brief.
+category: slides
+outcome: artifact
+panel_id: slides
+handler: office
+autonomy: assist
+agent_id: onlyoffice_assistant
+capabilities: [presentation_office]
+seed_prompt: >-
+  Contrato: PRESENTACIÓN POWERPOINT (autonomía baja, handler office).
+  El usuario es dueño del .pptx. Pídele que lo abra o lo suba.
+  Ayuda con textos, orden de slides y gráficos vía el Bridge de OnlyOffice
+  (presentation_get_slides / set_text / add_slide).
+  No generes un deck entero con slides_* ni Presenton.
+  No uses python-pptx para crear la presentación.
+payload:
+  handler: office
+  autonomy: assist
+tags: [Autonomía baja]
+preview: slideshow
+sort_order: 30

@@ -1,0 +1,29 @@
+agent_id: presenton_designer
+name: "Presenton Designer"
+description: >-
+  Presentaciones con el motor Presenton (layouts Template V2, editor visual,
+  export PPTX/PDF). Delégale para aislar un deck; la sesión/runtime es del
+  servicio del pack, no del designer core.
+role: "Diseñador de presentaciones"
+archetype: executor
+icon: slideshow
+version: 0.1.0
+expertise: >-
+  Experto en decks profesionales con Presenton: outline, elección de layout,
+  contenido por slide, assets, iteración en el editor embebido y export
+  PPTX/PDF editable. No genera HTML Reveal ni PowerPoint nativo.
+task_requirements: >-
+  Encargos de presentación: pitch, informe, formación, propuesta. Describe
+  audiencia, número de slides, tono y si hace falta export PPTX/PDF.
+
+default_capabilities: [presentation_presenton]
+allowed_capabilities: [image_generation]
+
+# Las tools presenton_* las aporta la capability (OpenAPI). No listar
+# slides_begin/add/finalize: no son superficie de este agente.
+excluded_core_tools:
+  - web_search
+  - web_fetch
+  - shell
+  - python
+  - javascript

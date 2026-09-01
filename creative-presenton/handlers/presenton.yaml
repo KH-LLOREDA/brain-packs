@@ -1,0 +1,20 @@
+id: presenton
+display_name: Presenton
+service: presenton
+match:
+  mime: [application/vnd.brain.presentation+json]
+  metadata: { handler: presenton }
+surfaces:
+  preview:
+    embed: "{service_url}/presentation?id={external_id}&embed=1"
+  editor:
+    embed: "{service_url}/presentation?id={external_id}&embed=1"
+  live:
+    embed: "{service_url}/presentation?id={external_id}&stream=true&embed=1"
+actions:
+  - id: export_pptx
+    operation: export_presentation
+  - id: export_pdf
+    operation: export_presentation
+capabilities: [presentation_presenton]
+auth: embed_token

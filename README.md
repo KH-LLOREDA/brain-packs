@@ -27,8 +27,17 @@ empaqueta a parte y cada entorno instala solo lo que usa.
 siguen en el core de Brain, el pack aporta el agente/capacidad/conocimiento):
 
 - `office-m365` — `m365_assistant` + capability `m365_productivity` (Microsoft 365 / Graph).
+- `office-mail` — visor de correo embebible (`handler=email`, agente `mail_viewer`).
+  Runtime `mail-viewer`; tools `mail_viewer_*` del OpenAPI. No sustituye Graph.
 - `data-databricks` — `databricks_analyst` + capability `databricks_query` (Databricks Lakehouse).
 - `creative-blender` — `blender_3d_creator` (creación 3D en Blender vía MCP/VNC).
+- `creative-slides` — presentación web (Reveal, autonomía alta). Capability
+  `presentation_web` + plantilla «Presentación web». Tools `slides_*` en el core.
+- `creative-presenton` — presentación colaborativa (autonomía media).
+  `presenton_designer` + capability `presentation_presenton` + plantilla.
+  Runtime Presenton; tools `presenton_*` del OpenAPI del servicio.
+- `office-pptx` — presentación PowerPoint (autonomía baja). Capability
+  `presentation_office` + plantilla. Tools del Bridge OnlyOffice en el core.
 - `automation-brainflow` — `brainflow_manager` (automatizaciones BrainFlow, tools `bf_*`).
 
 > Los agentes de investigación web y RAG **no** son packs: en v3 se resuelven como
@@ -61,6 +70,10 @@ o pídeselo a Brain (agente basis, capability core `pack_management`):
   connections/
     openapi/*.yaml              # plantilla de conexión OpenAPI (SIN secreto)
     mcp/*.yaml                  # plantilla de conexión MCP
+  services/*.yaml               # runtime desplegable (proxy / servidor MCP)
+  machines/*.yaml               # runtime en VMs
+  handlers/*.yaml               # superficies GUI (preview / editor / live)
+  templates/*.yaml              # plantillas de «Crear artefacto»
 ```
 
 ### `pack.yaml`

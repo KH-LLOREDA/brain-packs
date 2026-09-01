@@ -1,0 +1,12 @@
+id: office-mail
+name: "Office: Mail Viewer"
+version: 0.1.0
+description: >-
+  Visor de correo embebible (handler email). Runtime mail-viewer: parsea
+  RFC822, sanitiza HTML y lo pinta en un iframe aislado. No es un servidor
+  IMAP/SMTP ni sustituye a Graph; office-m365 sigue siendo el conector 365.
+
+  Las tools mail_viewer_* salen de la conexión OpenAPI del servicio.
+  Imagen registry.khlloreda.es/mail-viewer:0.1.0.
+requires: []
+requires_brain: ">=3.1.0"

@@ -1,0 +1,22 @@
+slug: mail_viewer
+image: registry.khlloreda.es/mail-viewer:0.1.0
+ports: [8080]
+env:
+  - MAIL_VIEWER_EMBED_SECRET
+generate_secrets: [MAIL_VIEWER_EMBED_SECRET]
+healthcheck:
+  path: /health
+  port: 8080
+scope: shared
+volumes:
+  - name: pack-mail-viewer-data
+    target: /app_data
+restart: unless-stopped
+provides:
+  connection:
+    kind: openapi
+    slug: mail_viewer
+    name: Mail Viewer
+    spec_path: /openapi.json
+    auth_type: bearer
+    auth_token_env: MAIL_VIEWER_EMBED_SECRET

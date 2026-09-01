@@ -1,0 +1,18 @@
+- id: email_viewer
+  description: >-
+    Visualizar y materializar correos como artefactos Brain (handler email).
+    Ingesta RFC822 o JSON, lectura de cuerpo sanitizado y adjuntos. No envía
+    correo: para Outlook usa m365_productivity; el transporte IMAP/BrainFlow
+    queda fuera de este visor.
+  category: office
+  auto_load: false
+  skills: [email_artifact]
+  tools:
+    - mail_viewer_ingest_message
+    - mail_viewer_get_message
+    - mail_viewer_get_attachment
+  examples: >-
+    CONTRATO — CORREO (handler email):
+    1) mail_viewer_ingest_message con el .eml o el JSON (from, subject, html).
+    2) Artefacto handler=email; el usuario lo ve en el embed.
+    3) No abras el HTML en el handler html (scripts). No levantes IMAP local.

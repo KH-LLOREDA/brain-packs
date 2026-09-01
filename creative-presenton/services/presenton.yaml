@@ -1,0 +1,31 @@
+slug: presenton
+# Imagen propia (nginx + API + Next + Chromium). Tag = versión del pack.
+image: registry.khlloreda.es/presenton:0.1.1
+ports: [80]
+# Token que Brain genera e inyecta: Bearer de la API y firma de embeds.
+# LLM/CUSTOM_* las rellena el instalador desde el modelo por defecto de Brain
+# (o el slug que se pase al instalar). El operador puede pisarlas por env.
+env:
+  - PRESENTON_EMBED_SECRET
+  - LLM
+  - CUSTOM_LLM_URL
+  - CUSTOM_LLM_API_KEY
+  - CUSTOM_MODEL
+generate_secrets: [PRESENTON_EMBED_SECRET]
+brain_llm: true
+healthcheck:
+  path: /health
+  port: 80
+scope: shared
+volumes:
+  - name: pack-presenton-data
+    target: /app_data
+restart: unless-stopped
+provides:
+  connection:
+    kind: openapi
+    slug: presenton
+    name: Presenton
+    spec_path: /openapi.json
+    auth_type: bearer
+    auth_token_env: PRESENTON_EMBED_SECRET
