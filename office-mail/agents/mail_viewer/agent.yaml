@@ -1,19 +1,20 @@
 agent_id: mail_viewer
 name: "Mail Viewer"
 description: >-
-  Materializa correos como artefactos (handler email) en el visor embebido.
-  No gestiona la bandeja de Outlook: para leer/enviar 365 delega en
-  m365_assistant.
+  Materializa y gestiona correo como artefactos (handlers email y mailbox):
+  buzón con carpetas, borradores y solicitud de envío. No opera un MTA ni la
+  bandeja de Outlook: el transporte 365 lo hace office-m365.
 role: "Visor de correo"
 archetype: executor
 icon: mail
-version: 0.1.0
+version: 0.2.0
 expertise: >-
-  Ingesta de mensajes RFC822 o JSON, puntero de artefacto y lectura segura
-  del HTML. No opera un MTA ni un inbox.
+  Ingesta de mensajes RFC822 o JSON, buzón (recibidos/borradores/enviados),
+  edición de borradores y circuito de envío enrutado a Graph. Lectura segura
+  del HTML. No opera un MTA ni un inbox propio.
 task_requirements: >-
-  Convertir un mensaje (pegado, .eml o cuerpo Graph) en un artefacto
-  visualizable. Para listar/enviar Outlook usa m365_assistant.
+  Convertir un mensaje (pegado, .eml o cuerpo Graph) en artefacto, gestionar el
+  buzón y preparar borradores. Enviar se enruta a m365_mail_send (office-m365).
 
 default_capabilities: [email_viewer]
 allowed_capabilities: [m365_productivity]

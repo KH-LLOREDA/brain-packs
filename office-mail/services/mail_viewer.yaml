@@ -1,5 +1,5 @@
 slug: mail_viewer
-image: registry.khlloreda.es/mail-viewer:0.1.0
+image: registry.khlloreda.es/mail-viewer:0.1.2
 ports: [8080]
 env:
   - MAIL_VIEWER_EMBED_SECRET

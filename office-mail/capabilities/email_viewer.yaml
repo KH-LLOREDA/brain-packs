@@ -1,18 +1,36 @@
 - id: email_viewer
   description: >-
-    Visualizar y materializar correos como artefactos Brain (handler email).
-    Ingesta RFC822 o JSON, lectura de cuerpo sanitizado y adjuntos. No envía
-    correo: para Outlook usa m365_productivity; el transporte IMAP/BrainFlow
-    queda fuera de este visor.
+    Visualizar y gestionar correo como artefactos Brain (handlers email y
+    mailbox). Ingesta RFC822 o JSON, buzón con carpetas (recibidos, borradores,
+    enviados), edición de borradores y solicitud de envío. El visor NO habla con
+    Graph ni levanta IMAP/SMTP: escribir un correo = borrador (status=draft);
+    enviar lo enruta Brain a m365_mail_send (pack office-m365).
   category: office
-  auto_load: false
+  auto_load: true
   skills: [email_artifact]
   tools:
     - mail_viewer_ingest_message
     - mail_viewer_get_message
     - mail_viewer_get_attachment
+    - mail_viewer_list_messages
+    - mail_viewer_update_message
+    - mail_viewer_send_message
+    - mail_viewer_set_message_status
+    - mail_viewer_open_mailbox
+    - mail_viewer_sync_inbox
   examples: >-
-    CONTRATO — CORREO (handler email):
-    1) mail_viewer_ingest_message con el .eml o el JSON (from, subject, html).
-    2) Artefacto handler=email; el usuario lo ve en el embed.
-    3) No abras el HTML en el handler html (scripts). No levantes IMAP local.
+    CONTRATO — CORREO (handlers email y mailbox):
+    1) Materializar un mensaje: mail_viewer_ingest_message (JSON from/to/subject/
+       html o eml). El artefacto solo existe si responde 201 con
+       artifact.external_id. Nunca inventes un mail:// ni un id.
+    2) Buzón: mail_viewer_open_mailbox devuelve el artefacto buzón (handler
+       mailbox) con recibidos/borradores/enviados. mail_viewer_list_messages
+       lista por carpeta.
+    3) Escribir un correo = mail_viewer_ingest_message con status=draft (queda en
+       borradores, pendiente de envío). Nunca m365_mail_send directo al redactar.
+    4) Enviar = mail_viewer_send_message; Brain enruta a m365_mail_send y marca el
+       borrador como enviado. O el usuario pulsa Enviar en el artefacto.
+    5) Recibir: mail_viewer_sync_inbox trae la bandeja de 365 al buzón (dedupe por
+       id de Graph). Al llegar correo puedes crear una tarea o un borrador de
+       respuesta (status=draft, in_reply_to), nunca enviar solo.
+    6) No abras el HTML en el handler html (scripts). No levantes IMAP local.

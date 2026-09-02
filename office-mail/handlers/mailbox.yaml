@@ -1,0 +1,17 @@
+id: mailbox
+display_name: Buzón
+service: mail_viewer
+match:
+  mime:
+    - application/vnd.brain.mailbox+json
+  metadata: { handler: mailbox }
+surfaces:
+  preview:
+    embed: "{service_url}/mailbox?embed=1"
+  editor:
+    embed: "{service_url}/mailbox?embed=1"
+actions:
+  - id: send
+    operation: send_message
+capabilities: [email_viewer]
+auth: embed_token
