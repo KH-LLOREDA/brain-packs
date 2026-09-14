@@ -11,6 +11,14 @@ env:
   - CUSTOM_LLM_URL
   - CUSTOM_LLM_API_KEY
   - CUSTOM_MODEL
+  # LiteLLM en ollama.khlloreda.com: /v1/images/generations (seedream)
+  # y /v1/videos (image-to-video cuando el modelo esté publicado).
+  - DISABLE_IMAGE_GENERATION
+  - IMAGE_PROVIDER
+  - OPENAI_COMPAT_IMAGE_BASE_URL
+  - OPENAI_COMPAT_IMAGE_API_KEY
+  - OPENAI_COMPAT_IMAGE_MODEL
+  - OPENAI_COMPAT_VIDEO_MODEL
 generate_secrets: [PRESENTON_EMBED_SECRET]
 brain_llm: true
 healthcheck:
