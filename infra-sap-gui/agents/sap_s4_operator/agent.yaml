@@ -20,7 +20,8 @@ task_requirements: >-
 # existen en el catálogo hasta que el Engine adquiere una máquina y conecta su
 # MCP, cosa que hace justo antes de ejecutar este agente.
 domain_tools:
-  - vnc_screenshot
+  - mcp_sap_sap_login
+  - mcp_sap_sap_logoff
   - mcp_sap_sap_navigate
   - mcp_sap_sap_session_info
   - mcp_sap_sap_get_window
@@ -31,7 +32,9 @@ domain_tools:
   - mcp_sap_sap_click_button
   - mcp_sap_sap_select_tab
   - mcp_sap_sap_press_key
+  - mcp_sap_sap_read_screen
   - mcp_sap_sap_read_grid
+  - mcp_sap_sap_read_table
   - mcp_sap_sap_read_list
   - mcp_sap_sap_modify_cell
   - mcp_sap_sap_fill_form

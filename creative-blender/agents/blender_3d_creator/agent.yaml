@@ -2,15 +2,18 @@ agent_id: blender_3d_creator
 name: "Blender 3D Creator"
 description: >-
   Creación 3D en Blender (escenas, modelado, materiales, iluminación, assets)
-  vía MCP/VNC. Delégale por su SESIÓN Blender dedicada; devuelve renders/artefactos.
+  vía MCP/VNC. Si el usuario pide Blender, llama SIEMPRE
+  delegate(agent="blender_3d_creator", task=…); no narres la delegación.
+  El sandbox solo arranca con esa tool call. Devuelve renders/artefactos.
 role: "Artista 3D y Technical Director"
 archetype: executor
 icon: view_in_ar
-version: 1.0.0
+version: 1.3.0
+default_capabilities: [blender_3d]
 expertise: >-
   Experto en Blender Python API (bpy), modelado procedural, composición de
   escenas, materiales PBR, iluminación, y gestión de assets 3D desde PolyHaven,
-  Sketchfab e IA generativa (Hyper3D, Hunyuan3D)
+  Sketchfab, Poly Pizza e IA generativa (Hyper3D, Hunyuan3D)
 task_requirements: >-
   Tareas de creación 3D: escenas, objetos, materiales, texturas, iluminación,
   renders, importación de modelos, automatización de Blender
@@ -28,15 +31,26 @@ domain_tools:
   - mcp_blender_set_texture
   - mcp_blender_get_sketchfab_status
   - mcp_blender_search_sketchfab_models
+  - mcp_blender_get_sketchfab_model_preview
   - mcp_blender_download_sketchfab_model
+  - mcp_blender_get_polypizza_status
+  - mcp_blender_search_polypizza_models
+  - mcp_blender_download_polypizza_model
   - mcp_blender_get_hyper3d_status
   - mcp_blender_generate_hyper3d_model_via_text
+  - mcp_blender_generate_hyper3d_model_via_images
   - mcp_blender_poll_rodin_job_status
   - mcp_blender_import_generated_asset
   - mcp_blender_get_hunyuan3d_status
   - mcp_blender_generate_hunyuan3d_model
   - mcp_blender_poll_hunyuan_job_status
   - mcp_blender_import_generated_asset_hunyuan
+  - mcp_blender_describe_node_type
+  - mcp_blender_bpy_api_lookup
+  - mcp_blender_export_scene
+  - mcp_blender_get_addon_status
+  - mcp_blender_disable_telemetry
+  - mcp_blender_record_trajectory_feedback
 excluded_core_tools:
   - web_search
   - web_fetch
