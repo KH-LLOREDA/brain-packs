@@ -20,3 +20,7 @@ description: >-
   Sustituye al subagente sap_s4_operator que vivía en el core de Brain: quien
   no tenga SAP deja de arrastrar un agente que no puede usar.
 requires: []
+visual_apps:
+  - kind: sap
+    label: SAP GUI
+    icon: table_chart

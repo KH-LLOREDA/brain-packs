@@ -20,6 +20,7 @@ empaqueta a parte y cada entorno instala solo lo que usa.
 
 - `infra-biw` — proxy-biw + subagente `sap_analyst` (datos SAP BIW).
 - `infra-sap-gui` — pool de VMs Windows + subagente `sap_s4_operator` (SAP GUI).
+  Tile de Aplicaciones `sap` (no aparece en entornos sin este pack).
 - `infra-portainer` / `infra-proxmox` — Docker (Portainer) y virtualización (Proxmox) para `basis_agent`.
 - `kh7-infra` / `khlloreda-dns` — infra específica de KH Lloreda.
 
@@ -31,6 +32,7 @@ siguen en el core de Brain, el pack aporta el agente/capacidad/conocimiento):
   Runtime `mail-viewer`; tools `mail_viewer_*` del OpenAPI. No sustituye Graph.
 - `data-databricks` — `databricks_analyst` + capability `databricks_query` (Databricks Lakehouse).
 - `creative-blender` — `blender_3d_creator` (creación 3D en Blender vía MCP/VNC).
+  Tile de Aplicaciones `blender`.
 - `creative-slides` — presentación web (Reveal, autonomía alta). Capability
   `presentation_web` + plantilla «Presentación web». Tools `slides_*` en el core.
 - `creative-presenton` — presentación colaborativa (autonomía media).
@@ -84,6 +86,10 @@ name: "Infra: Portainer"
 version: 1.0.0
 description: "..."
 requires: []                       # ids de otros packs
+# visual_apps:                     # tiles de mesa › Aplicaciones (SAP, Blender…)
+#   - kind: sap
+#     label: SAP GUI
+#     icon: table_chart
 ```
 
 ### Agent patch (`agents/*.yaml`)

@@ -13,3 +13,7 @@ description: >-
   en el pack.
 requires: []
 requires_brain: ">=3.0.0"
+visual_apps:
+  - kind: blender
+    label: Blender
+    icon: view_in_ar
