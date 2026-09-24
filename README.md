@@ -11,7 +11,7 @@ que creó.
 La configuración de agentes/capacidades/skills/herramientas ya no tiene por qué
 estar toda predefinida en el código del Engine. Lo específico de un entorno
 (p. ej. `proxy-portainer` (pack `infra-portainer`), Proxmox autocontenido (pack
-`infra-proxmox`), la infra de kh7 con Vaultwarden, o el DNS de khlloreda) se
+`infra-proxmox`), Vaultwarden (pack `infra-vaultwarden`), o el DNS de khlloreda) se
 empaqueta a parte y cada entorno instala solo lo que usa.
 
 ## Catálogo
@@ -21,7 +21,8 @@ empaqueta a parte y cada entorno instala solo lo que usa.
 - `infra-biw` — proxy-biw + subagente `sap_analyst` (datos SAP BIW).
 - `infra-sap-gui` — pool de VMs Windows + subagente `sap_s4_operator` (SAP GUI).
 - `infra-portainer` / `infra-proxmox` — Docker (Portainer) y virtualización (Proxmox) para `basis_agent`.
-- `kh7-infra` / `khlloreda-dns` — infra específica de KH Lloreda.
+- `infra-vaultwarden` — proxy-vaultwarden (credenciales) para `basis_agent`.
+- `khlloreda-dns` — DNS de KH Lloreda.
 
 **Aplicación** (agente + capability + skills; extraídos del core en v3 — sus tools
 siguen en el core de Brain, el pack aporta el agente/capacidad/conocimiento):
@@ -44,7 +45,7 @@ POST /api/v1/packs/install
 ```
 
 o pídeselo a Brain (agente basis, capability core `pack_management`):
-`pack_install(subdir="kh7-infra")`  (usa `repo_url`/`ref` por defecto de `packs.*`).
+`pack_install(subdir="infra-vaultwarden")`  (usa `repo_url`/`ref` por defecto de `packs.*`).
 
 > En entornos aislados (p. ej. kh7) usa un **mirror git interno** como `repo_url`.
 > Los packs viven en la **raíz** de este repo, por lo que `subdir` es el id del pack.
@@ -92,13 +93,18 @@ resuelve del entorno al instalar (si falta, la conexión se crea sin credencial 
 se rellena en *Conexiones OpenAPI*).
 
 ```yaml
-name: "Proxy Vaultwarden"
-slug: proxy-vaultwarden
-spec_url: "http://brain-proxy-vaultwarden:3001/openapi.json"
-base_url: "https://proxy-vw.example.com"
+name: "API externa"
+slug: mi-api
+spec_url: "https://api.example.com/openapi.json"
+base_url: "https://api.example.com"
 auth_type: bearer                  # none | bearer | api_key | basic
-auth_token_env: PROXY_VW_TOKEN
+auth_token_env: MI_API_TOKEN
 ```
+
+Si el pack **despliega** el proxy (`services/*.yaml` con `provides.connection`),
+no declares esta plantilla: el instalador escribe `spec_url` y `base_url` con
+la URL que devuelve el despliegue. Un hostname fijo se desalinea en cuanto el
+contenedor no se llama así.
 
 Tras instalar un pack con conexiones OpenAPI, sus herramientas se regeneran en
 caliente (o reinicia el Engine).

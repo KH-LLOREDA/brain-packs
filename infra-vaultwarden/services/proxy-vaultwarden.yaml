@@ -1,0 +1,39 @@
+slug: proxy-vaultwarden
+# El pack despliega el proxy. La conexión no lleva un hostname fijo: el
+# instalador usa la URL que devuelve el workspace-manager (host + puerto
+# publicado). El nombre del contenedor no forma parte del contrato.
+image: registry.khlloreda.es/proxy-vaultwarden:latest
+ports: [3001]
+# La imagen escucha en 127.0.0.1 si HOST no está. El puerto publicado del
+# host llega por la interfaz del contenedor, así que hay que abrir 0.0.0.0.
+environment:
+  HOST: "0.0.0.0"
+  PORT: "3001"
+  NODE_ENV: production
+  LOG_LEVEL: info
+  LOG_FORMAT: json
+# Credenciales del vault y el bearer de Brain se rellenan después, en el
+# entorno y en la conexión. El pack no genera la API key.
+env:
+  - VAULTWARDEN_URL
+  - BW_CLIENTID
+  - BW_CLIENTSECRET
+  - BW_PASSWORD
+healthcheck:
+  path: /health
+  port: 3001
+scope: shared
+# sqlite (tokens, auditoría, handles) en /app/data. Sin volumen se pierde al
+# recrear el contenedor y el token sembrado desaparece.
+volumes:
+  - name: pack-proxy-vaultwarden-data
+    target: /app/data
+restart: unless-stopped
+provides:
+  connection:
+    kind: openapi
+    slug: proxy-vaultwarden
+    name: "Proxy Vaultwarden"
+    spec_path: /openapi.json
+    auth_type: bearer
+    auth_token_env: PROXY_VW_TOKEN
