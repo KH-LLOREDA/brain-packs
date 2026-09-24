@@ -1,0 +1,10 @@
+id: infra-vaultwarden
+name: "Infra: Vaultwarden"
+version: 1.1.0
+description: >-
+  Despliega proxy-vaultwarden como servicio del entorno y cablea su conexión
+  OpenAPI con la URL que devuelve el despliegue (sin hostname fijo). Añade la
+  capability y la skill para el agente basis. Las credenciales del vault
+  (VAULTWARDEN_URL, BW_CLIENTID, BW_CLIENTSECRET, BW_PASSWORD) salen del
+  entorno al instalar, no del pack.
+requires: []

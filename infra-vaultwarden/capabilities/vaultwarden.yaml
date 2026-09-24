@@ -1,0 +1,16 @@
+id: vaultwarden
+description: "Gestión de credenciales vía proxy-vaultwarden: estado/unlock, listado de ítems y handles opacos (issue/resolve/inject) para no exponer secretos en claro."
+category: infra
+auto_load: false
+skills: [vaultwarden_ops]
+# operationId del OpenAPI del proxy, con prefijo del slug de la conexión.
+# create/edit/delete no están en el proxy: no se listan aquí.
+tools:
+  - proxy-vaultwarden_vw_status
+  - proxy-vaultwarden_vw_unlock
+  - proxy-vaultwarden_vw_lock
+  - proxy-vaultwarden_vw_list_items
+  - proxy-vaultwarden_vw_get_item
+  - proxy-vaultwarden_vw_issue_handle
+  - proxy-vaultwarden_vw_resolve
+  - proxy-vaultwarden_vw_inject

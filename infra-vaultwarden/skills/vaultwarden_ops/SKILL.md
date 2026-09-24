@@ -1,15 +1,15 @@
 ---
-name: kh7_proxy_vw_ops
+name: vaultwarden_ops
 description: >-
-  Operar con credenciales en kh7 a través de proxy-vaultwarden: estado/unlock,
-  CRUD de ítems y handles opacos (issue/resolve/inject) para no exponer secretos
-  en claro.
+  Operar con credenciales a través de proxy-vaultwarden: estado/unlock,
+  listado de ítems y handles opacos (issue/resolve/inject) para no exponer
+  secretos en claro.
 metadata:
   category: infra
   agent: basis_agent
 ---
 
-# KH7 Proxy Vaultwarden — Operativa
+# Vaultwarden — Operativa
 
 ## Trigger conditions
 - Necesitas obtener, crear, editar o eliminar secretos en Vaultwarden
@@ -31,9 +31,9 @@ Brain/LLM  →  handle (vw://h_xxx)  →  Proxy VW  →  Vaultwarden  →  valor
 
 ### Conexión OpenAPI
 - **Slug**: proxy-vaultwarden
-- **specUrl**: `http://brain-proxy-vaultwarden:3001/openapi.json` (nombre DNS del servicio en brain-network; no usar la IP del contenedor, es efímera)
-- **base_url**: `https://proxy-vw.kh7.com`
-- **11 herramientas** registradas y operativas (capability `kh7_infra`)
+- El pack despliega el proxy. La URL de la conexión es la que devuelve el
+  instalador (host y puerto publicado), no un nombre de contenedor.
+- Las herramientas son las de la capability `vaultwarden`, generadas desde el OpenAPI del proxy.
 
 ### Autenticación
 - Bearer token con scope=brain
@@ -46,24 +46,18 @@ Brain/LLM  →  handle (vw://h_xxx)  →  Proxy VW  →  Vaultwarden  →  valor
 
 ## Herramientas Brain (`proxy-vaultwarden_vw_*`)
 
-### Lectura (8)
 | Tool | Endpoint | Descripción |
 |------|----------|-------------|
 | proxy-vaultwarden_vw_status | GET /api/vw/status | Estado del proxy + vault (locked/unlocked) |
 | proxy-vaultwarden_vw_unlock | POST /api/vw/unlock | Desbloquear vault (si está locked) |
 | proxy-vaultwarden_vw_lock | POST /api/vw/lock | Bloquear vault |
 | proxy-vaultwarden_vw_list_items | GET /api/vw/items | Listar items del vault (nombre, tipo, id) |
-| proxy-vaultwarden_vw_get_item | GET /api/vw/items/{id} | Obtener item completo (campos en claro) |
+| proxy-vaultwarden_vw_get_item | GET /api/vw/items/{id} | Obtener item (campos enmascarados) |
 | proxy-vaultwarden_vw_issue_handle | POST /api/vw/items/{id}/handle | Emitir handle opaco para un campo de un item |
 | proxy-vaultwarden_vw_resolve | POST /api/vw/resolve | Resolver handle → valor real |
 | proxy-vaultwarden_vw_inject | POST /api/vw/inject | Inyectar valores en template con placeholders |
 
-### Escritura (3)
-| Tool | Endpoint | Descripción |
-|------|----------|-------------|
-| proxy-vaultwarden_vw_create_item | POST /api/vw/items | Crear login/secureNote/card/identity |
-| proxy-vaultwarden_vw_edit_item | PUT /api/vw/items/{id} | Editar item (merge parcial) |
-| proxy-vaultwarden_vw_delete_item | DELETE /api/vw/items/{id} | Eliminar item |
+El proxy no expone crear, editar ni borrar ítems. Esos tres nombres no van en la capability.
 
 ## Flujos comunes
 
