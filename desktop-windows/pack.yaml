@@ -1,0 +1,22 @@
+id: desktop-windows
+name: "Desktop: Windows"
+version: 2.0.0
+description: >-
+  Dueño del pool de escritorios Windows en Proxmox y del agente que los opera
+  con Windows-MCP (CursorTouch): aplicaciones, clics, texto y, si hace falta,
+  PowerShell. Cada usuario recibe una VM clonada de la plantilla de escritorio
+  (prefijo win-, MCP en el puerto 8000). El hipervisor es de esta conexión;
+  otros packs añaden perfiles sobre la misma fila.
+
+  El acceso a Proxmox y el id de la plantilla no viajan en el pack: se resuelven
+  de PROXMOX_URL, PROXMOX_TOKEN_ID, PROXMOX_TOKEN_SECRET, PROXMOX_NODE y
+  PROXMOX_WIN_DESKTOP_TEMPLATE_ID, y se completan en Configuración › Sandbox.
+
+  WINDOWS_MCP_URL (origen, sin /mcp) en el Engine apunta a un PC ya encendido
+  y no usa el pool. El nombre de la conexión MCP del guest sigue siendo windows:
+  las tools del agente son mcp_windows_*.
+
+  No abre tile de Aplicaciones. SAP GUI no se opera desde aquí: ese control
+  vive en infra-sap-gui, que depende de este pack y usa otra imagen.
+requires: []
+requires_brain: ">=3.2.0"

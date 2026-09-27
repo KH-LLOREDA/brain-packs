@@ -1,0 +1,57 @@
+agent_id: windows_operator
+name: "Windows Operator"
+description: >-
+  Opera un escritorio Windows (aplicaciones, ventanas, formularios) vía
+  Windows-MCP. Delégale con delegate(agent="windows_operator", task=…);
+  no narres la delegación. Devuelve el resultado, no el recorrido de clics.
+  No entra en SAP GUI.
+role: "Operador de escritorio Windows"
+archetype: executor
+icon: desktop_windows
+version: 1.0.0
+default_capabilities: [windows_desktop]
+expertise: >-
+  Escritorio Windows conducido por el árbol de accesibilidad (UIA): abrir
+  aplicaciones, localizar controles, escribir, leer lo visible. PowerShell y
+  el registro solo cuando la interfaz no llega.
+task_requirements: >-
+  Actuar en un PC Windows: abrir o cambiar de aplicación, rellenar campos,
+  pulsar botones, leer una ventana, copiar un dato al usuario.
+
+# Las publica la conexión MCP «windows» al conectar. El id es
+# mcp_<nombre-de-conexión>_<NombreTool>.
+domain_tools:
+  - mcp_windows_Screenshot
+  - mcp_windows_Snapshot
+  - mcp_windows_Scrape
+  - mcp_windows_DisplayInventory
+  - mcp_windows_Click
+  - mcp_windows_Type
+  - mcp_windows_Scroll
+  - mcp_windows_Move
+  - mcp_windows_Shortcut
+  - mcp_windows_MultiSelect
+  - mcp_windows_MultiEdit
+  - mcp_windows_Wait
+  - mcp_windows_WaitFor
+  - mcp_windows_App
+  - mcp_windows_Clipboard
+  - mcp_windows_Process
+  - mcp_windows_Notification
+  - mcp_windows_FileSystem
+  - mcp_windows_PowerShell
+  - mcp_windows_Registry
+
+# El disco y la shell de este agente son los del Windows, no el workspace
+# de Brain. Delegar desde aquí no aporta.
+excluded_core_tools:
+  - web_search
+  - web_fetch
+  - shell
+  - read_file
+  - write_file
+  - edit_file
+  - list_directory
+  - search_files
+  - delegate
+  - parallel_delegate

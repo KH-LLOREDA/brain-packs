@@ -11,10 +11,14 @@ metadata:
 
 # Imagen dorada de SAP GUI (Windows sobre Proxmox)
 
-El pool no crea máquinas de la nada: clona una **plantilla** de Proxmox que ya
-lleva Windows, SAP GUI y el servidor MCP instalados. Este documento es el
-procedimiento para construirla la primera vez y para refrescarla cuando cambie
-SAP GUI, el MCP o el sistema destino.
+El perfil `sap` clona una **plantilla** distinta de la del escritorio genérico.
+La base Windows (usuario de sesión, sysprep, acceso a Proxmox) la documenta el
+pack `desktop-windows`. Aquí se parte de esa base y se añaden SAP GUI, el
+scripting y el MCP del puerto 3001. No reutilices la plantilla `win-`
+(Windows-MCP en el 8000): SAP entra por scripting, no por clics.
+
+Este documento es el procedimiento para construir la imagen de SAP la primera
+vez y para refrescarla cuando cambie SAP GUI, el MCP o el sistema destino.
 
 Es trabajo de infraestructura con pasos interactivos (instalar Windows, instalar
 SAP GUI): no se automatiza desde Brain. Lo que sí es automático, una vez existe

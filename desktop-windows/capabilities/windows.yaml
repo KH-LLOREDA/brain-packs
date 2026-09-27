@@ -1,0 +1,31 @@
+# El coordinador no recibe las tools: solo el contrato de delegar.
+- id: windows_desktop
+  description: >-
+    Escritorio Windows (abrir apps, rellenar formularios, leer lo que hay en
+    pantalla) vía Windows-MCP. Delégalo SIEMPRE en windows_operator con
+    delegate(agent="windows_operator", task=…). No uses mcp_windows_* desde el
+    coordinador. No sirve para SAP GUI: eso es sap_s4_operator.
+  category: infra
+  auto_load: false
+  skills: [windows_desktop]
+  tools: []
+  examples: >-
+    CONTRATO — ESCRITORIO WINDOWS:
+    1) Si el usuario pide actuar en un PC Windows (abrir un programa, pulsar,
+       escribir, leer una ventana), llama YA
+       delegate(agent="windows_operator", task="<brief completo>").
+    2) NUNCA escribas que has delegado sin esa tool call.
+    3) NUNCA load_capability("windows_desktop") para hacerlo tú.
+    4) SAP GUI no es este pack. Una transacción SAP se delega en
+       sap_s4_operator, si ese pack está instalado.
+    5) Tras el return, resume al usuario el resultado. Si falló, vuelve a
+       delegate con el error.
+
+- id: windows_mcp_setup
+  description: >-
+    Cómo dejar Windows-MCP escuchando en HTTP para que Brain lo alcance.
+    No opera el escritorio.
+  category: infra
+  auto_load: false
+  skills: [windows_mcp_setup]
+  tools: []

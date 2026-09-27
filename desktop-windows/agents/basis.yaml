@@ -1,0 +1,5 @@
+# Quien mantiene el entorno es quien apunta Brain al Windows. No se carga
+# en cada tarea de infraestructura: solo cuando se pide el alta del MCP.
+agent_id: basis_agent
+add_allowed_capabilities:
+  - windows_mcp_setup

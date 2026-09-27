@@ -42,6 +42,10 @@ siguen en el core de Brain, el pack aporta el agente/capacidad/conocimiento):
 - `office-pptx` — presentación PowerPoint (autonomía baja). Capability
   `presentation_office` + plantilla. Tools del Bridge OnlyOffice en el core.
 - `automation-brainflow` — `brainflow_manager` (automatizaciones BrainFlow, tools `bf_*`).
+- `desktop-windows` — dueño del pool Proxmox de escritorios Windows.
+  `windows_operator` los opera con Windows-MCP (puerto 8000, prefijo `win-`).
+  Plantilla `PROXMOX_WIN_DESKTOP_TEMPLATE_ID`. `WINDOWS_MCP_URL` en el Engine
+  usa un PC fijo y no pide VM. `infra-sap-gui` depende de este pack.
 
 > Los agentes de investigación web y RAG **no** son packs: en v3 se resuelven como
 > agentes dinámicos (`spawn_agent` + `load_capability("web_research"|"knowledge_base")`).
