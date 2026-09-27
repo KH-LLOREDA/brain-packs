@@ -1,0 +1,39 @@
+# Pool de escritorios Windows. Este pack es el dueño del hipervisor: la fila
+# proxmox-sap-pool. Los perfiles de otros packs (SAP, …) se cuelgan de la misma
+# conexión y no traen token ni URL.
+#
+# Los valores del entorno son NOMBRES de variables. Si al instalar no están,
+# el pool queda declarado e inactivo y se completa en Configuración › Sandbox.
+slug: windows
+kind: proxmox-pool
+profile: windows
+name: "Pool Windows"
+description: >-
+  VMs Windows con Windows-MCP en el puerto 8000, una por usuario. Se clonan de
+  la plantilla de escritorio y se reciclan al snapshot clean.
+
+connection:
+  url_env: PROXMOX_URL
+  token_id_env: PROXMOX_TOKEN_ID
+  token_secret_env: PROXMOX_TOKEN_SECRET
+  node_env: PROXMOX_NODE
+
+template:
+  id_env: PROXMOX_WIN_DESKTOP_TEMPLATE_ID
+  storage_env: PROXMOX_VM_STORAGE
+  target_node_env: PROXMOX_VM_TARGET_NODE
+  snapshot: clean
+  full_clone: false
+
+pool:
+  prefix: win-
+  warm: 1
+  min: 1
+  max: 3
+  idle_minutes: 30
+  max_session_minutes: 0
+  destroy_on_release: false
+
+guest:
+  mcp_port: 8000
+  vnc_port: 6080
