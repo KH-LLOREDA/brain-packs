@@ -36,9 +36,12 @@ Brain/LLM  →  handle (vw://h_xxx)  →  Proxy VW  →  Vaultwarden  →  valor
 - Las herramientas son las de la capability `vaultwarden`, generadas desde el OpenAPI del proxy.
 
 ### Autenticación
-- Bearer token con scope=brain
-- Token: vault item **"Proxy Vaultwarden - Brain Bearer Token"** (secureNote)
-- El token se configura en la conexión OpenAPI (`PROXY_VW_TOKEN`), no se hardcodea.
+- Brain → proxy: bearer de la conexión OpenAPI (`PROXY_VW_TOKEN`), scope=brain.
+- Proxy → Vaultwarden: la cuenta de quien ejecuta el turno. Vive en Mis
+  conexiones, tipo `vaultwarden` (URL, client id, client secret, contraseña
+  maestra). No hay un vault compartido en el entorno.
+- Si el usuario no tiene esa conexión, las tools fallan y hay que pedirle que
+  la cree. No pidas la contraseña maestra en el chat.
 
 ### Policies
 - Scope **brain**: allow all (create/edit/delete/list/get/inject/resolve)
@@ -82,6 +85,6 @@ proxy-vaultwarden_vw_inject({ template: "PORTAINER_PASSWORD={{vw://h_xxx}}", ...
 
 ## Reglas / Pitfalls
 - Nunca imprimas contraseñas/tokens en claro en el chat; prefiere handles.
-- **Vault locked tras restart**: el entrypoint desbloquea automáticamente; si falla, usa `proxy-vaultwarden_vw_unlock`.
+- **Sin conexión personal**: el usuario tiene que guardar su Bitwarden en Mis conexiones. El unlock del proxy usa esa cuenta, no una contraseña del entorno.
 - **Handles expiran** (TTL): si caducan, re-emítelos.
 - **Scope brain required**: sin el bearer token correcto, todo devuelve 403 (revisa el token en *Conexiones OpenAPI*, solo admin).

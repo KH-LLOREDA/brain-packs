@@ -12,13 +12,9 @@ environment:
   NODE_ENV: production
   LOG_LEVEL: info
   LOG_FORMAT: json
-# Credenciales del vault y el bearer de Brain se rellenan después, en el
-# entorno y en la conexión. El pack no genera la API key.
-env:
-  - VAULTWARDEN_URL
-  - BW_CLIENTID
-  - BW_CLIENTSECRET
-  - BW_PASSWORD
+# El bearer de Brain hacia el proxy se rellena en la conexión OpenAPI.
+# La cuenta de Vaultwarden es por usuario (tipo vaultwarden en Mis conexiones).
+env: []
 healthcheck:
   path: /health
   port: 3001
@@ -37,3 +33,5 @@ provides:
     spec_path: /openapi.json
     auth_type: bearer
     auth_token_env: PROXY_VW_TOKEN
+    # Cada llamada lleva la cuenta de quien está en el turno.
+    user_connection: vaultwarden
