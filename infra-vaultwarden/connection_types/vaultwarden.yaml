@@ -1,0 +1,26 @@
+# Tipo de Mis conexiones. El pack declara el formulario; cada usuario guarda
+# su propia cuenta. El proxy compartido no tiene un vault de entorno.
+id: vaultwarden
+label: Bitwarden
+icon: vpn_key
+color: "#175ddc"
+auth_type: password
+base_url:
+  required: true
+  label: URL del servidor
+  hint: https://vault.ejemplo.com
+credentials:
+  - key: client_id
+    label: Client ID
+    type: text
+    required: true
+  - key: client_secret
+    label: Client secret
+    type: password
+    required: true
+    secret: true
+  - key: password
+    label: Contraseña maestra
+    type: password
+    required: true
+    secret: true
