@@ -1,0 +1,15 @@
+slug: khlloreda-strapi
+name: "KH-LLOREDA Strapi (GAD + Producteca)"
+description: >
+  Backend Strapi compartido por GAD y Producteca. Las tools khlloreda_*
+  leen esta conexión (base_url + bearer). No generar tools OpenAPI:
+  los wrappers Python aplican filtros y aplanan la respuesta de Strapi v4.
+base_url: "https://strapi.khlloreda.com"
+auth_type: bearer
+auth_token_env: STRAPI_KHLLOREDA_TOKEN
+# lista-general / accesos-horas: NO enviar este token (dan 500).
+# Las tools de fichajes llaman esos endpoints sin Authorization.
+auth_header: Authorization
+auth_prefix: Bearer
+timeout: 30
+generate_tools: false
