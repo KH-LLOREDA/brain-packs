@@ -1,6 +1,6 @@
 id: desktop-windows
 name: "Desktop: Windows"
-version: 2.0.0
+version: 2.1.0
 description: >-
   Dueño del pool de escritorios Windows en Proxmox y del agente que los opera
   con Windows-MCP (CursorTouch): aplicaciones, clics, texto y, si hace falta,

@@ -1,10 +1,10 @@
 agent_id: windows_operator
 name: "Windows Operator"
 description: >-
-  Opera un escritorio Windows (aplicaciones, ventanas, formularios) vía
-  Windows-MCP. Delégale con delegate(agent="windows_operator", task=…);
-  no narres la delegación. Devuelve el resultado, no el recorrido de clics.
-  No entra en SAP GUI.
+  Recado suelto en un escritorio Windows (Windows-MCP). Si el hilo ya es
+  ese escritorio, no lo uses: load_capability("windows_desktop") y actúa
+  tú. Este agente solo cuando Windows es un aparte de otro asunto.
+  Devuelve el resultado, no el recorrido de clics. No entra en SAP GUI.
 role: "Operador de escritorio Windows"
 archetype: executor
 icon: desktop_windows
