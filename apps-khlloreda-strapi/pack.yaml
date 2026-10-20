@@ -1,0 +1,11 @@
+id: apps-khlloreda-strapi
+name: "Apps KH-LLOREDA (GAD + menú + Producteca)"
+version: 1.0.5
+description: >
+  Consulta de solo lectura a Producteca, a los fichajes y horas propias de GAD y
+  al menú/pedido de comida (hoy o la semana en curso) del usuario logueado.
+  No incluye datos de terceros, empresas ni directorio interno. Las tools
+  Python viven en el core del engine (khlloreda_*); este pack aporta la
+  capability, el subagente, la skill y la plantilla de conexión (sin el token).
+requires_brain: ">=3.0.0"
+requires: []
