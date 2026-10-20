@@ -1,10 +1,11 @@
 id: infra-sap-gui
 name: "Infra: SAP GUI (Windows sobre Proxmox)"
-version: 1.1.0
+version: 1.2.0
 description: >-
   Aporta la capacidad de OPERAR SAP: transacciones, pantallas y formularios de
-  SAP GUI for Windows, conducidos por scripting (no por píxeles) desde el
-  subagente sap_s4_operator.
+  SAP GUI for Windows, conducidos por scripting (no por píxeles). La capacidad
+  sap_gui conecta la VM SAP del usuario a quien la carga: el agente principal,
+  o el subagente sap_s4_operator para encargos acotados.
 
   No abre el hipervisor. Depende de desktop-windows, que es el dueño del pool
   Proxmox. Este pack solo añade el perfil sap: otra plantilla (Windows + SAP GUI
@@ -20,7 +21,9 @@ description: >-
   no tenga SAP deja de arrastrar un agente que no puede usar.
 requires:
   - id: desktop-windows
-    version: ">=2.0.0"
+    version: ">=2.2.0"
+# load_capability abre las mcp_servers de sap_gui desde Brain 3.2.7.
+requires_brain: ">=3.2.7"
 visual_apps:
   - kind: sap
     label: SAP GUI

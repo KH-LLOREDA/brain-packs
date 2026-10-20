@@ -14,8 +14,9 @@ metadata:
 El perfil `sap` clona una **plantilla** distinta de la del escritorio genérico.
 La base Windows (usuario de sesión, sysprep, acceso a Proxmox) la documenta el
 pack `desktop-windows`. Aquí se parte de esa base y se añaden SAP GUI, el
-scripting y el MCP del puerto 3001. No reutilices la plantilla `win-`
-(Windows-MCP en el 8000): SAP entra por scripting, no por clics.
+scripting y el MCP del puerto 3001. No reutilices la plantilla `win-`: SAP
+entra por scripting, no por clics. La imagen SAP sí lleva además Windows-MCP en
+el 8000, para mover ficheros y usar Windows en la misma VM.
 
 Este documento es el procedimiento para construir la imagen de SAP la primera
 vez y para refrescarla cuando cambie SAP GUI, el MCP o el sistema destino.
@@ -78,10 +79,14 @@ se inyectan en caliente. Si aparecen en `C:\brain\sap-mcp\.env`, la imagen está
 mal construida y todos compartirían usuario SAP.
 
 El script instala Python y dependencias, activa el auto-logon de Windows,
-desactiva suspensión y bloqueo, abre el firewall (3001 y RDP), monta el stack
-VNC de vista previa y registra la tarea de inicio de sesión `BrainSapMcp`.
+desactiva suspensión y bloqueo, abre el firewall (3001, 6080, 8000 y RDP),
+monta el stack VNC de vista previa, instala Windows-MCP (uv con su propio
+Python 3.14) y registra las tareas de inicio de sesión `BrainSapMcp`,
+`BrainNoVNC` y `BrainWindowsMcp`, todas sin límite de tiempo.
 
-Tras reiniciar, comprobar desde otra máquina: `curl http://<ip-vm>:3001/mcp`.
+Tras reiniciar, comprobar desde otra máquina: `curl http://<ip-vm>:3001/mcp` y
+`curl http://<ip-vm>:8000/mcp`. La red tiene que dejar pasar 3001, 6080 y 8000
+desde el Engine hasta la VLAN de las VMs.
 Los registros están en `C:\brain\sap-mcp\logs\`.
 
 El MCP corre como tarea de sesión, no como servicio, porque el scripting de SAP
@@ -101,6 +106,15 @@ C:\Windows\System32\Sysprep\sysprep.exe /generalize /oobe /shutdown `
 El `unattend.xml` recrea el usuario `sapbot` con auto-logon para que la tarea del
 MCP siga funcionando después de generalizar. Hay que rellenar sus marcadores de
 contraseña antes de usarlo.
+
+**Refrescar una plantilla existente**: clon completo de la plantilla, arrancarlo,
+aplicar cambios y volver a pasar sysprep. Nunca se toca la plantilla vieja en
+sitio, porque sus clones enlazados dependen de su disco. La contraseña del
+auto-logon sigue en `Winlogon\DefaultPassword` del clon: el `unattend.xml` se
+genera dentro de la VM a partir de ese valor (por el agente QEMU), sin sacarla.
+Añade un `FirstLogonCommands` que borre
+`%WINDIR%\System32\Sysprep\unattend.xml`; si no, cada clon guarda una copia en
+claro. Prueba un clon enlazado desechable antes de cambiar `template_id`.
 
 ## 5. Plantilla y snapshot
 

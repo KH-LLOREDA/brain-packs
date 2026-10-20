@@ -19,7 +19,7 @@ empaqueta a parte y cada entorno instala solo lo que usa.
 **Infra / entorno** (servicios, conexiones, VMs):
 
 - `infra-biw` — proxy-biw + subagente `sap_analyst` (datos SAP BIW).
-- `infra-sap-gui` — pool de VMs Windows + subagente `sap_s4_operator` (SAP GUI).
+- `infra-sap-gui` — perfil SAP del pool Windows + capacidad `sap_gui` (la carga el agente principal o el subagente `sap_s4_operator`).
   Tile de Aplicaciones `sap` (no aparece en entornos sin este pack).
 - `infra-portainer` / `infra-proxmox` — Docker (Portainer) y virtualización (Proxmox) para `basis_agent`.
 - `infra-vaultwarden` — proxy-vaultwarden (credenciales) para `basis_agent`.

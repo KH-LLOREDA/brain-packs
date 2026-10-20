@@ -1,13 +1,14 @@
 agent_id: sap_s4_operator
 name: "SAP S/4 Operator"
 description: >-
-  Operación en SAP GUI (transacciones MM/FI/SD/PP/CO, pantallas, formularios)
-  vía MCP/VNC. Delégale por su SESIÓN SAP GUI dedicada; devuelve los datos
-  extraídos, no la navegación.
+  Encargo acotado en SAP GUI (una consulta, una extracción, un formulario)
+  en la sesión SAP del usuario. Para trabajo con varios pasos o intentos,
+  carga tú load_capability("sap_gui"). Devuelve los datos, no la navegación.
 role: "Operador SAP S/4 HANA"
 archetype: executor
 icon: terminal
-version: 2.0.0
+version: 2.1.0
+default_capabilities: [sap_gui]
 expertise: >-
   Experto en SAP GUI: navegación de transacciones (MM, FI, SD, PP, CO),
   interacción visual con la interfaz, extracción de datos de pantalla, y
