@@ -1,7 +1,37 @@
-# Capability de infraestructura del pack: no aporta tools (las de operación son
-# las mcp_sap_* que publica el guest en caliente, y ya las lleva el subagente en
-# sus domain_tools), sino el conocimiento para construir y mantener la imagen
-# dorada de la que clona el pool.
+# Operar SAP GUI. Las tools mcp_sap_* no van en `tools`: las publica el MCP de
+# scripting que corre DENTRO de la VM del pool, y load_capability abre esa
+# conexión (mcp_servers) y las adjunta a quien la carga: el agente principal o
+# sap_s4_operator, que la trae como capacidad por defecto. windows_desktop
+# conecta el Windows-MCP de ESA MISMA VM (la imagen SAP lo lleva en el 8000).
+- id: sap_gui
+  description: >-
+    Operar SAP GUI for Windows por scripting: transacciones, formularios,
+    grids y listas, menús y exportes, en la sesión SAP dedicada del usuario,
+    con Windows (ficheros, PowerShell) en la misma VM. Cárgala y opera tú, o
+    delega en sap_s4_operator una consulta acotada.
+  category: infra
+  auto_load: false
+  requires: [windows_desktop]
+  mcp_servers: [sap]
+  skills: [sap_gui_operation]
+  tools: [import_sap_file]
+  examples: >-
+    CONTRATO — SAP GUI:
+    1) load_capability("sap_gui") conecta tu VM SAP y te da las tools
+       mcp_sap_* (SAP) y mcp_windows_* (el Windows de esa misma VM). El
+       visor del escritorio se abre en el panel de artefactos.
+    2) Opera tú cuando la tarea tenga varios pasos, intentos o dependa de lo
+       hablado. Delega en sap_s4_operator una consulta o extracción acotada:
+       delegate(agent="sap_s4_operator", task="<brief completo>").
+    3) Las lecturas de grids y listas son grandes: pagina (start_row/max_rows,
+       full=false) y quédate con lo necesario.
+    4) Ficheros y comandos en la VM van por mcp_windows_* (FileSystem,
+       PowerShell), nunca con sap_win_keys abriendo «Ejecutar». Si aun así
+       falta una herramienta, para y explica qué falta.
+    5) Resume al usuario el resultado, no la navegación.
+
+# Capability de infraestructura del pack: no aporta tools, sino el conocimiento
+# para construir y mantener la imagen dorada de la que clona el pool.
 - id: sap_gui_provisioning
   description: "Provisión y mantenimiento del pool de VMs Windows con SAP GUI: imagen dorada, plantilla Proxmox, snapshot de reciclado"
   category: infra

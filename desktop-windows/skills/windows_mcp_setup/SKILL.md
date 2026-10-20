@@ -21,10 +21,12 @@ En una VM de Proxmox, con el usuario que va a usar el escritorio ya creado y
 con auto-logon (un servicio sin sesión no ve el escritorio):
 
 ```powershell
-uvx windows-mcp serve --transport streamable-http --host 0.0.0.0 --port 8000
+uvx windows-mcp serve --transport streamable-http --host 0.0.0.0 --port 8000 --allow-insecure-remote
 ```
 
-Sin `--auth-key`. El cliente MCP de Brain no envía esa cabecera. Deja el
+Sin `--auth-key`. El cliente MCP de Brain no envía esa cabecera, y desde la
+0.8 Windows-MCP no escucha en la LAN sin auth salvo con
+`--allow-insecure-remote`. Mantén la VLAN de las VMs privada. Deja el
 proceso al arranque de la sesión (tarea programada al iniciar sesión, no un
 servicio de Session 0). Comprueba desde otra máquina:
 `curl http://<ip>:8000/mcp`.
@@ -32,8 +34,10 @@ servicio de Session 0). Comprueba desde otra máquina:
 Sysprep y convierte la VM en plantilla. Anota el VMID. El snapshot de reciclado
 se llama `clean` y tiene que existir en la plantilla; los clones lo heredan.
 
-El puerto del MCP es 8000 y el prefijo de las VMs es `win-`. No reutilices la
-plantilla de SAP (`sap-win-`, MCP en 3001): son imágenes distintas.
+El puerto del MCP es 8000 y el prefijo de las VMs es `win-`. No uses la
+plantilla de SAP para este pool (`sap-win-`, MCP en 3001): lleva SAP GUI. La
+imagen SAP sí trae también Windows-MCP en el 8000, para que operar SAP no
+pierda las habilidades de Windows.
 
 ## 2. Variables del entorno
 

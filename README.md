@@ -21,8 +21,9 @@ empaqueta a parte y cada entorno instala solo lo que usa.
 - `infra-biw` — proxy-biw + subagente `sap_analyst` (datos SAP BIW).
 - `desktop-windows` — dueño del pool Proxmox de escritorios Windows
   (`windows_operator`, prefijo `win-`, MCP en el puerto 8000).
-- `infra-sap-gui` — perfil SAP sobre ese pool + subagente `sap_s4_operator`
-  (scripting, no píxeles). Depende de `desktop-windows`.
+- `infra-sap-gui` — perfil SAP sobre ese pool + capacidad `sap_gui` (la carga el
+  agente principal o el subagente `sap_s4_operator`; scripting, no píxeles).
+  Depende de `desktop-windows`.
 - `infra-portainer` / `infra-proxmox` — Docker (Portainer) y virtualización (Proxmox) para `basis_agent`.
 - `infra-vaultwarden` — proxy-vaultwarden (credenciales) para `basis_agent`.
 - `khlloreda-dns` — DNS de KH Lloreda.

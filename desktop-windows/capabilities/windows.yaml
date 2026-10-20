@@ -1,15 +1,16 @@
 # El asistente carga esta capability y opera en el mismo hilo.
 # Las tools mcp_windows_* no van en `tools`: solo existen cuando Windows-MCP
-# está conectado, y load_capability abre esa sesión y las adjunta.
+# está conectado, y load_capability abre esa sesión (mcp_servers) y las adjunta.
 - id: windows_desktop
   description: >-
     Escritorio Windows (abrir apps, rellenar formularios, leer lo que hay en
     pantalla) vía Windows-MCP. En un hilo que ya es ese escritorio, carga
     load_capability("windows_desktop") y llama tú a Snapshot, Click y App.
     windows_operator solo para un recado suelto desde otro asunto. No sirve
-    para SAP GUI: eso es sap_s4_operator.
+    para SAP GUI: eso es la capacidad sap_gui.
   category: infra
   auto_load: false
+  mcp_servers: [windows]
   skills: [windows_desktop]
   tools: []
   examples: >-
@@ -25,8 +26,8 @@
        aparece, DisplayInventory una vez, Screenshot de la ventana y un
        Click en la rejilla de esa foto. Si la pantalla no cambia, un ajuste
        y para.
-    4) SAP GUI no es este pack. Una transacción SAP va a sap_s4_operator,
-       si ese pack está instalado.
+    4) SAP GUI no es este pack. Para una transacción SAP carga
+       load_capability("sap_gui"), si el pack infra-sap-gui está instalado.
     5) Resume al usuario el resultado, no la lista de clics.
 
 - id: windows_mcp_setup
