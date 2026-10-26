@@ -1,0 +1,32 @@
+# Programar en SAP por ADT (/sap/bc/adt) a través del servicio abap-dev de
+# proxy-sap. Las tools abap_* viven en el core del Engine y usan SIEMPRE las
+# credenciales SAP que el usuario tiene guardadas en Brain; qué sistemas
+# admiten desarrollo lo decide el proxy (ADT_SYSTEMS), nunca el agente.
+- id: abap_development
+  description: >-
+    Programar ABAP en el sistema SAP de desarrollo sin pasar por SAP GUI:
+    buscar y leer código, escribirlo con comprobación de sintaxis inmediata,
+    activar, ejecutar ABAP Unit y gestionar órdenes de transporte, con el
+    usuario SAP de cada persona.
+  category: infra
+  auto_load: false
+  skills: [abap_development]
+  tools:
+    - abap_search
+    - abap_read
+    - abap_write
+    - abap_create
+    - abap_check
+    - abap_activate
+    - abap_run_unit_tests
+    - abap_transport
+    - abap_delete
+  examples: >-
+    CONTRATO — desarrollo ABAP:
+    1) Localiza con abap_search y lee con abap_read (paginado) antes de tocar.
+    2) Cambia con abap_write usando edits {old, new}; el resultado trae la
+       comprobación de sintaxis. Corrige hasta syntaxOk=true.
+    3) Activa con abap_activate y, si hay tests, lanza abap_run_unit_tests.
+    4) Fuera de $TMP hace falta orden: abap_transport(action="check") y usa
+       la que proponga o pide permiso para crear una.
+    5) Resume al usuario qué cambiaste, en qué objetos y en qué orden.
