@@ -1,0 +1,26 @@
+id: slides.collaborative
+name: Presentación colaborativa
+description: >-
+  Editor Presenton embebido. Trabajáis los dos sobre el mismo deck:
+  el agente genera e itera; tú pintas en el iframe.
+category: slides
+outcome: artifact
+panel_id: slides
+handler: presenton
+autonomy: collaborate
+agent_id: presenton_designer
+capabilities: [presentation_presenton]
+seed_prompt: >-
+  Contrato: PRESENTACIÓN COLABORATIVA (autonomía media, handler presenton).
+  Genera el deck UNA sola vez con presenton_generate_presentation
+  (o _async + poll hasta completed). No relances generate si ya hay
+  presentation_id. El artefacto nace con handler=presenton; el usuario
+  lo ve en el embed. No uses slides_begin/slides_add/slides_finalize
+  ni OnlyOffice para crear. Pregúntame audiencia, número de slides y tono, y genera.
+payload:
+  tool: presenton_generate_presentation
+  handler: presenton
+  autonomy: collaborate
+tags: [Autonomía media]
+preview: slideshow
+sort_order: 20

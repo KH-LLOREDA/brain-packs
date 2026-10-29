@@ -1,0 +1,22 @@
+- id: presentation_web
+  description: >-
+    Presentación web (Reveal): el agente genera el deck en HTML del
+    workspace. Contrato autónomo — no uses Presenton ni OnlyOffice.
+    Flujo: slides_begin → slides_add por slide → slides_finalize.
+  category: media
+  auto_load: false
+  skills: [slides_web]
+  tools:
+    - slides_begin
+    - slides_add
+    - slides_finalize
+    - read_file
+    - apply_patch
+  requires: [image_generation]
+  examples: >-
+    CONTRATO — PRESENTACIÓN WEB (autonomía alta):
+    1) slides_begin(title, theme?) una sola vez.
+    2) slides_add(section_html) una llamada por slide.
+    3) slides_finalize() persiste el artefacto (handler=slides-html).
+    NUNCA presenton_* ni OnlyOffice para crear este deck.
+    RETOCAR: apply_patch sobre el HTML en presentations/<slug>.html.

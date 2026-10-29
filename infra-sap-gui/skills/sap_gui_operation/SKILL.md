@@ -20,7 +20,7 @@ coordenadas de píxel.
 
 - SAP GUI for Windows con la SAP GUI Scripting API nativa (COM). Scripting habilitado en cliente y servidor.
 - Los elementos se identifican por su ID SAP GUI (ej: `wnd[0]/usr/ctxtSUID_ST_BNAME-BNAME`), NO por posición de píxel.
-- El idioma del sistema SAP es **ES** (español). Las etiquetas, menús y mensajes están en español.
+- El idioma del sistema SAP es **ES** (español), pero SAP mezcla etiquetas en inglés (en SE38 subir un fuente es «Utilidades > Más utilidades > Upload/Download > Upload...»). No adivines el texto de un menú: léelo con `sap_get_menus(contains=…)`.
 - Brain inyecta las credenciales del usuario con `sap_login` al asignar la VM. Si al empezar **no hay sesión** (error COM de índice/enumerator, o `sap_session_info` vacío), llama **tú** a `sap_login` y espera. No pulses «Acceder al sistema» ni «Abrir» en el SAP Logon pad: eso no abre una sesión scriptable.
 
 ## Windows en la misma VM
@@ -36,7 +36,9 @@ La VM SAP también corre Windows-MCP. Al cargar `sap_gui` tienes sus tools
 ## Límites
 
 - `sap_win_keys`/`sap_win_click` son solo para diálogos nativos que bloquean a SAP. No los uses para abrir «Ejecutar», PowerShell o el explorador: para eso está `mcp_windows_*`.
-- No uses los clics de Windows-MCP (`Click`, `Type`) dentro de SAP GUI: SAP se opera por scripting (`mcp_sap_*`).
+- No uses los clics ni las teclas de Windows-MCP (`Click`, `Type`, `Shortcut`) dentro de SAP GUI: SAP se opera por scripting (`mcp_sap_*`), que no depende de qué ventana esté delante. Las teclas de Windows van a la ventana en primer plano, que puede ser el SAP Logon pad.
+- **Nunca cierres la ventana «SAP Logon»**: cerrarla termina todas las sesiones y se pierde lo no guardado. Si se pone delante, al scripting le da igual.
+- Lee el final de cada resultado: las acciones informan de las ventanas que aparecen o se cierran y de a qué ventana fue el foco. Si una tecla o clic acabó en una ventana que no esperabas, para y corrige antes de seguir.
 - Si un menú o botón aparece desactivado, comprueba el modo de la pantalla (visualizar vs. modificar) antes de buscar caminos alternativos.
 
 ## Herramientas disponibles
@@ -70,14 +72,15 @@ La VM SAP también corre Windows-MCP. Al cargar `sap_gui` tienes sus tools
 - **sap_modify_cell(row, column, value, grid_id?)**: Escribe un valor en una celda de ALV. Los nombres de columna son nombres técnicos SAP (ej: TXZ01, MENGE, EEIND).
 
 ### Menús
-- **sap_get_menus()**: Lista las entradas seleccionables de la barra de menús con su id y ruta completa (ej: "Lista > Exportar > Hoja de cálculo"). Útil para acciones que solo están en el menú.
-- **sap_select_menu(menu_id)**: Dispara una entrada de menú por su id (puedes seleccionar una hoja directamente, sin abrir los menús padre).
+- **sap_get_menus(contains?)**: Lista las entradas seleccionables de la barra de menús con su id y ruta completa (ej: "Lista > Exportar > Hoja de cálculo"). `contains` filtra por texto de la ruta sin distinguir mayúsculas ni acentos (ej: `"upload"`, `"Utilidades"`).
+- **sap_select_menu(path | menu_id)**: Dispara una entrada de menú por su ruta visible (`"Utilidades > Más utilidades > Upload/Download > Upload..."`, o solo la hoja) o por su id, sin abrir los menús padre. Si no encuentra la entrada devuelve las más parecidas: elige una de ellas en vez de inventar otra.
 
 ### Diálogos nativos de Windows (fuera de SAP)
 El scripting SAP solo ve los dynpros SAP (`wnd[0]`, `wnd[1]`…). Los diálogos **nativos de Windows** (aviso de seguridad de scripting de SAP GUI al acceder a ficheros, diálogos abrir/guardar de Windows, message boxes, popups ActiveX/HTML) son invisibles para el scripting y pueden **bloquear** la llamada. Un watchdog interno los detecta y resuelve automáticamente (marca "Recordar mi decisión" y pulsa "Permitir"), así que normalmente NO tienes que hacer nada. Solo si una acción informa que sigue bloqueada:
 - **sap_win_dialogs()**: Lista los diálogos nativos por encima de SAP con sus botones/checkboxes/texto.
 - **sap_win_click(button?, title_contains?, handle?)**: Pulsa un botón de un diálogo nativo (ej: "Permitir", "Abrir"). Sin `button` envía Enter.
-- **sap_win_keys(keys, title_contains?, handle?)**: Envía teclas a un diálogo nativo (sintaxis pywinauto: "{ENTER}", "{ESC}", rutas de fichero…).
+- **sap_win_keys(keys, title_contains?, handle?)**: Envía teclas a un diálogo nativo (sintaxis pywinauto: "{ENTER}", "{ESC}", rutas de fichero…). Sin `title_contains`/`handle` van al diálogo nativo de más arriba.
+- Ambas devuelven `target` (a qué ventana fueron y por qué), `foreground` y las ventanas nuevas o cerradas. Comprueba que `target` es el diálogo que querías.
 
 ## Virtual Keys (vkeys) — referencia
 

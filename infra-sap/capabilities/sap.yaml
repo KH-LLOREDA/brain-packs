@@ -1,0 +1,104 @@
+# Tools generadas desde la conexión OpenAPI 'proxy-sap': proxy-sap_<operationId>.
+# Las que escriben en SAP llevan x-brain-approval en el OpenAPI del proxy.
+- id: sap_data
+  description: >-
+    Consultar datos de SAP con el usuario SAP de cada persona: pedidos de
+    venta, productos, bancos propios y saldos, condiciones de venta, tablas
+    por RFC, situación MD04 y fichas de variable logística.
+  category: data
+  auto_load: false
+  skills: [sap_data_access]
+  tools:
+    - proxy-sap_getSalesOrders
+    - proxy-sap_getSalesOrdersBySalesOrder
+    - proxy-sap_getSalesOrdersBySalesOrderItems
+    - proxy-sap_getSalesOrdersValueHelpOrderTypes
+    - proxy-sap_getSalesOrdersValueHelpCustomers
+    - proxy-sap_getProducts
+    - proxy-sap_getProductsByProductId
+    - proxy-sap_getProductsValueHelpCategories
+    - proxy-sap_getHouseBanks
+    - proxy-sap_getHouseBanksByCompanyCodeByHouseBankAccounts
+    - proxy-sap_getBankBalances
+    - proxy-sap_getBankBalancesSummary
+    - proxy-sap_getBankBalancesGlAccounts
+    - proxy-sap_getBankBalancesCashPosition
+    - proxy-sap_postRfcTableReaderReadTable
+    - proxy-sap_getRfcTableReaderTableFieldsByTableName
+    - proxy-sap_getSalesConditionsInfo
+    - proxy-sap_getManipuladorFlowCheckMd04
+    - proxy-sap_getManipuladorFlowOrderDetail
+    - proxy-sap_getVariableLogisticaByProductCode
+
+- id: sap_operations
+  description: >-
+    Escribir datos de negocio en SAP con el usuario de cada persona: crear o
+    modificar productos y condiciones de venta, convertir órdenes de
+    fabricación y crear o liberar pedidos de compra. Cada escritura pide
+    aprobación.
+  category: data
+  auto_load: false
+  skills: [sap_business_operations]
+  tools:
+    - proxy-sap_getProductsByProductId
+    - proxy-sap_postProducts
+    - proxy-sap_putProductsByProductId
+    - proxy-sap_patchProductsByProductId
+    - proxy-sap_getSalesConditionsInfo
+    - proxy-sap_postSalesConditionsCreate
+    - proxy-sap_getManipuladorFlowCheckMd04
+    - proxy-sap_getManipuladorFlowOrderDetail
+    - proxy-sap_postManipuladorFlowReleaseOrder
+    - proxy-sap_postManipuladorFlowCreatePurchaseOrder
+    - proxy-sap_postManipuladorFlowReleasePurchaseOrder
+    - proxy-sap_postManipuladorFlowRunAll
+
+- id: abap_reading
+  description: >-
+    Leer código ABAP de SAP sin modificarlo: buscar objetos, leer programas,
+    clases, funciones e includes, y comprobar su sintaxis.
+  category: infra
+  auto_load: false
+  skills: [abap_development]
+  tools:
+    - proxy-sap_abapSystems
+    - proxy-sap_abapSearch
+    - proxy-sap_abapRead
+    - proxy-sap_abapCheck
+    - proxy-sap_abapTransportCheck
+    - proxy-sap_getAbapSourceProgramByProgramName
+    - proxy-sap_getAbapSourceFunctionByFunctionName
+    - proxy-sap_getAbapSourceFunctionByFunctionNameInfo
+    - proxy-sap_getAbapSourceFunctionGroupByGroupNameFunctions
+    - proxy-sap_getAbapSourceFunctionGroupByGroupNameTop
+
+- id: abap_development
+  description: >-
+    Programar ABAP en el sistema SAP de desarrollo sin SAP GUI: buscar y leer
+    código, escribirlo con comprobación de sintaxis inmediata, crear objetos,
+    activar, ejecutar ABAP Unit y gestionar órdenes de transporte, con el
+    usuario SAP de cada persona. Para desarrolladores.
+  category: infra
+  auto_load: false
+  skills: [abap_development]
+  tools:
+    - proxy-sap_abapSystems
+    - proxy-sap_abapSearch
+    - proxy-sap_abapRead
+    - proxy-sap_abapWrite
+    - proxy-sap_abapCreate
+    - proxy-sap_abapCheck
+    - proxy-sap_abapActivate
+    - proxy-sap_abapRunUnitTests
+    - proxy-sap_abapTransportCheck
+    - proxy-sap_abapTransportCreate
+    - proxy-sap_abapDelete
+  examples: >-
+    CONTRATO — desarrollo ABAP:
+    1) Localiza con abapSearch y lee con abapRead (paginado) antes de tocar.
+    2) Cambia con abapWrite usando edits {old, new}; el resultado trae la
+       comprobación de sintaxis. Corrige hasta syntaxOk=true.
+    3) Activa con abapActivate y, si hay tests, lanza abapRunUnitTests.
+    4) Fuera de $TMP hace falta orden: abapTransportCheck y usa la que
+       proponga o pide permiso para crear una con abapTransportCreate.
+    5) Resume al usuario qué cambiaste, en qué objetos y en qué orden.

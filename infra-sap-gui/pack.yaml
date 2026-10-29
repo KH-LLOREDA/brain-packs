@@ -1,6 +1,6 @@
 id: infra-sap-gui
 name: "Infra: SAP GUI (Windows sobre Proxmox)"
-version: 1.2.0
+version: 1.4.0
 description: >-
   Aporta la capacidad de OPERAR SAP: transacciones, pantallas y formularios de
   SAP GUI for Windows, conducidos por scripting (no por píxeles). La capacidad

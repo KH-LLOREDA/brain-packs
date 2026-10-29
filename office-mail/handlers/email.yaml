@@ -1,0 +1,16 @@
+id: email
+display_name: Correo
+service: mail_viewer
+match:
+  mime:
+    - application/vnd.brain.email+json
+    - message/rfc822
+  metadata: { handler: email }
+surfaces:
+  preview:
+    embed: "{service_url}/message?id={external_id}&embed=1"
+  editor:
+    embed: "{service_url}/message?id={external_id}&embed=1"
+actions: []
+capabilities: [email_viewer]
+auth: embed_token

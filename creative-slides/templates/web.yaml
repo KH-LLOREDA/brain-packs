@@ -1,0 +1,26 @@
+id: slides.web
+name: Presentación web
+description: >-
+  HTML Reveal en el workspace. El agente construye el deck; tú diriges.
+  Rápida, sin app extra. Retocar = el agente edita el HTML.
+category: slides
+outcome: artifact
+panel_id: slides
+handler: slides-html
+autonomy: autonomous
+agent_id: designer_agent
+capabilities: [presentation_web]
+seed_prompt: >-
+  Contrato: PRESENTACIÓN WEB (autonomía alta, handler slides-html).
+  Crea el deck con slides_begin → slides_add (una slide por llamada) →
+  slides_finalize. Tema corporativo salvo que pida otro.
+  No uses Presenton, no abras OnlyOffice, no generes un PPTX de cero.
+  Pregúntame primero el tema, la audiencia y el número de slides.
+payload:
+  tool: slides_begin
+  params: { theme: kh7 }
+  handler: slides-html
+  autonomy: autonomous
+tags: [Autonomía alta]
+preview: slideshow
+sort_order: 10

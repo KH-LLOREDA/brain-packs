@@ -1,0 +1,10 @@
+id: office-pptx
+name: "Office: PowerPoint"
+version: 0.1.0
+description: >-
+  Presentación PowerPoint en OnlyOffice (autonomía baja: el documento es
+  tuyo; la IA asiste). Aporta la capability presentation_office y la
+  plantilla «Presentación PowerPoint». Las tools MCP del Bridge siguen
+  en el core; este pack es la puerta de producto.
+requires: []
+requires_brain: ">=3.1.0"

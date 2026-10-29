@@ -26,7 +26,10 @@ Si este hilo ya es el escritorio, llama tú las tools. No pases cada paso a
 2. `Snapshot`. Si el control tiene id, `Click` o `Type` sobre ese id.
    `Shortcut` solo para un atajo real (`Ctrl+S`, `Alt+F4`).
 3. Tras un cambio de pantalla, otro `Snapshot`. `WaitFor` si la ventana tarda.
-4. Entrega el dato pedido. El recorrido de clics no es el resultado.
+4. Si `Click`, `Type` o `Shortcut` devuelven `Foreground window`, léelo. Las
+   teclas van a esa ventana. Si no es la que esperabas o aparece una ventana
+   nueva, no sigas tecleando: enfoca la buena con `App` (`mode="switch"`).
+5. Entrega el dato pedido. El recorrido de clics no es el resultado.
 
 `Scrape` lee páginas web. No lee la pantalla.
 

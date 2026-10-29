@@ -1,0 +1,51 @@
+slug: proxy-sap
+# Node/Express con el SDK NetWeaver RFC; escucha en el 3000.
+image: registry.khlloreda.es/proxy-sap:infra-sap-0.1.0
+ports: [3000]
+environment:
+  PORT: "3000"
+  NODE_ENV: production
+  # Nunca usa credenciales guardadas: cada petición trae las del usuario y
+  # sin ellas responde 401.
+  SAP_CREDENTIALS: request
+  # Sistemas alcanzables. Se sobrescribe con SAP_SYSTEMS en el entorno de
+  # Brain. "write" habilita crear, escribir, activar y borrar código ABAP;
+  # rfcHost/sysnr se usan si la conexión del usuario no trae host.
+  SAP_SYSTEMS: >-
+    [{"id":"SB2","url":"http://sandapp2.khlloreda.com:8000","client":"300","write":true,"aliases":["SAP TEST","SANDBOX"],"rfcHost":"sandapp2.khlloreda.com","sysnr":"00"}]
+# PROXY_SAP_TOKEN lo genera Brain al instalar: el proxy lo exige en /api y la
+# conexión OpenAPI lo usa como bearer.
+env: [PROXY_SAP_TOKEN, SAP_SYSTEMS]
+generate_secrets: [PROXY_SAP_TOKEN]
+healthcheck:
+  path: /health
+  port: 3000
+scope: shared
+# config.db de la consola del proxy (usuarios y auditoría). No contiene
+# credenciales SAP en modo request.
+volumes:
+  - name: pack-proxy-sap-data
+    target: /app/src/data
+restart: unless-stopped
+provides:
+  connection:
+    kind: openapi
+    slug: proxy-sap
+    name: "Proxy SAP"
+    spec_path: /openapi.json
+    auth_type: bearer
+    auth_token_env: PROXY_SAP_TOKEN
+    # ABAP Unit y las cadenas de fabricación tardan más que el defecto (30 s).
+    timeout: 180
+    # Cada llamada lleva la conexión SAP de Mi perfil de quien está en el turno.
+    user_connection: sap
+    user_headers:
+      x-sap-user: user
+      x-sap-password: password
+      x-sap-client: client
+      x-sap-language: language
+      x-sap-host: host
+      x-sap-sysnr: sysnr
+      x-sap-router: router
+      x-sap-system: system
+    user_required: [user, password]

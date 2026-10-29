@@ -117,6 +117,13 @@ for i in range(10):
     bpy.context.collection.objects.link(copy)
 ```
 
+## Consultar API antes de adivinar
+
+- `bpy_api_lookup(query)` — operadores, propiedades y enums válidos para esta versión
+- `describe_node_type(bl_idname)` — sockets reales del nodo (no uses el nombre traducido)
+- `get_addon_status()` — `blender_version` y capabilities del addon MCP
+- `export_scene(filepath, format="glb")` — export GLB/FBX de escena, selección u objetos nombrados
+
 ## Errores comunes y soluciones
 
 | Error | Causa | Solución |

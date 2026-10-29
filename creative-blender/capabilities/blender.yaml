@@ -1,0 +1,29 @@
+# Capability de routing del pack: NO da tools al coordinador (las mcp_blender_*
+# viven en el subagente y solo existen cuando hay SESIÓN Blender). El contrato
+# es delegar; el sandbox arranca en ensure_blender_mcp al llamar delegate.
+- id: blender_3d
+  description: >-
+    Escenas y modelado 3D en Blender (casa, objeto, materiales, iluminación,
+    render, assets PolyHaven/Sketchfab). Delégalo SIEMPRE en blender_3d_creator
+    con delegate(agent="blender_3d_creator", task=…). NUNCA narres «voy a
+    delegar» / «he delegado» sin esa tool call: el sandbox no arranca. No uses
+    generate_3d ni mcp_blender_* desde el coordinador.
+  category: media
+  auto_load: false
+  skills:
+    - scene_composition
+    - blender_python_patterns
+    - materials_and_lighting
+    - asset_workflow
+  tools: []
+  examples: >-
+    CONTRATO — BLENDER 3D:
+    1) Si el usuario pide crear, editar o renderizar en Blender, llama YA
+       delegate(agent="blender_3d_creator", task="<brief completo>").
+    2) NUNCA escribas que has delegado sin esa tool call. Sin delegate no hay
+       workspace ni MCP ni VNC.
+    3) NUNCA load_capability("blender_3d") para hacer tú el 3D. Este pack no
+       da tools al coordinador; da un subagente con sesión dedicada.
+    4) No uses generate_3d (hub Atlas) para una escena Blender.
+    5) Tras el return del subagente, resume al usuario con el resultado
+       (renders/artefactos). Si falló, vuelve a delegate con el error.

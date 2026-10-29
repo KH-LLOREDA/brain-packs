@@ -1,0 +1,19 @@
+id: infra-sap
+name: "Infra: SAP (proxy-sap)"
+version: 0.1.0
+description: >-
+  Despliega proxy-sap y aporta el acceso a SAP por API: consultas de negocio
+  (OData y RFC), operaciones que escriben en SAP y desarrollo ABAP por ADT.
+
+  Cada llamada viaja con la conexión SAP que el usuario tiene en Mi perfil: SAP
+  ve al usuario real, registra sus cambios y aplica sus autorizaciones. El
+  proxy no guarda credenciales (SAP_CREDENTIALS=request); quien no tenga
+  conexión SAP no tiene acceso. Los sistemas a los que se puede llegar los
+  fija SAP_SYSTEMS en el entorno de Brain, y solo los marcados con write
+  admiten desarrollo.
+
+  Las capacidades van separadas para poder asignarlas por rol: sap_data
+  (consultar), sap_operations (escribir datos de negocio, con aprobación),
+  abap_reading (leer código) y abap_development (programar, solo para
+  desarrolladores). Restringirlas se hace con roles en Administración.
+requires: []
