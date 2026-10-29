@@ -19,8 +19,14 @@ empaqueta a parte y cada entorno instala solo lo que usa.
 **Infra / entorno** (servicios, conexiones, VMs):
 
 - `infra-biw` — proxy-biw + subagente `sap_analyst` (datos SAP BIW).
-- `infra-sap-gui` — perfil SAP del pool Windows + capacidad `sap_gui` (la carga el agente principal o el subagente `sap_s4_operator`).
-  Tile de Aplicaciones `sap` (no aparece en entornos sin este pack).
+- `desktop-windows` — dueño del pool Proxmox de escritorios Windows.
+  `windows_operator` los opera con Windows-MCP (puerto 8000, prefijo `win-`).
+  Plantilla `PROXMOX_WIN_DESKTOP_TEMPLATE_ID`. `WINDOWS_MCP_URL` en el Engine
+  usa un PC fijo y no pide VM.
+- `infra-sap` — proxy-sap. Credenciales SAP de Mi perfil; capacidades de lectura, operaciones y desarrollo ABAP.
+- `infra-sap-gui` — perfil SAP sobre ese pool + capacidad `sap_gui` (la carga el
+  agente principal o el subagente `sap_s4_operator`; scripting, no píxeles).
+  Depende de `desktop-windows`. Tile de Aplicaciones `sap`.
 - `infra-portainer` / `infra-proxmox` — Docker (Portainer) y virtualización (Proxmox) para `basis_agent`.
 - `infra-vaultwarden` — proxy-vaultwarden (credenciales) para `basis_agent`.
 - `khlloreda-dns` — DNS de KH Lloreda.
@@ -42,10 +48,6 @@ siguen en el core de Brain, el pack aporta el agente/capacidad/conocimiento):
 - `office-pptx` — presentación PowerPoint (autonomía baja). Capability
   `presentation_office` + plantilla. Tools del Bridge OnlyOffice en el core.
 - `automation-brainflow` — `brainflow_manager` (automatizaciones BrainFlow, tools `bf_*`).
-- `desktop-windows` — dueño del pool Proxmox de escritorios Windows.
-  `windows_operator` los opera con Windows-MCP (puerto 8000, prefijo `win-`).
-  Plantilla `PROXMOX_WIN_DESKTOP_TEMPLATE_ID`. `WINDOWS_MCP_URL` en el Engine
-  usa un PC fijo y no pide VM. `infra-sap-gui` depende de este pack.
 
 > Los agentes de investigación web y RAG **no** son packs: en v3 se resuelven como
 > agentes dinámicos (`spawn_agent` + `load_capability("web_research"|"knowledge_base")`).
