@@ -1,30 +1,77 @@
 # Capability del pack: NO pisa presentation_design del core (Reveal).
-# El coordinador enruta por autonomía / plantilla, no por un id único.
+# Khai la carga él mismo (load_capability); para aislar o paralelizar decks,
+# spawn_agent(capabilities=[presentation_presenton]). No hay agente fijo.
 - id: presentation_presenton
   description: >-
-    Presentaciones colaborativas con Presenton (layouts Template V2 o
-    modo smart). Delégalo en presenton_designer. No uses slides_* ni
-    OnlyOffice para crear este deck.
+    Presentaciones colaborativas con Presenton: crear un deck, retocar slides
+    (textos, charts, tablas, infográficos, bloques, tema, outline) y exportar
+    PPTX/PDF. Cárgala tú mismo (load_capability) cuando el usuario pida una
+    presentación o esté trabajando en un artefacto handler=presenton; usa
+    spawn_agent con esta capability solo para aislar o paralelizar decks.
+    No uses slides_* ni OnlyOffice para estos decks.
   category: media
   auto_load: false
   skills: [presenton_layouts]
   tools:
-    - presenton_generate_presentation
+    # Crear (outline revisable en el editor), leer, exportar
+    - presenton_create_presentation
     - presenton_generate_presentation_async
     - presenton_get_presentation_generation_status
-    - presenton_export_presentation
     - presenton_get_presentation
-    - presenton_edit_slide
-    - presenton_edit_slide_html
-    - presenton_update_slide
     - presenton_update_presentation
+    - presenton_export_presentation
+    # Deck estándar (Template V2): descubrir
+    - presenton_deck_get_template_summary
+    - presenton_deck_search_slide
+    - presenton_deck_get_slide_at_index
+    - presenton_deck_read_source_documents
+    - presenton_deck_get_available_layouts
+    - presenton_deck_get_available_blocks
+    - presenton_deck_get_available_infographics
+    - presenton_deck_get_content_schema_from_layout_id
+    - presenton_deck_get_presentation_theme
+    # Deck estándar: editar elementos y componentes
+    - presenton_deck_add_element
+    - presenton_deck_update_element
+    - presenton_deck_delete_element
+    - presenton_deck_add_component
+    - presenton_deck_update_component
+    - presenton_deck_delete_component
+    - presenton_deck_add_infographic
+    # Deck estándar: slides, tema y outline
+    - presenton_deck_add_new_slide
+    - presenton_deck_add_new_slide_layout
+    - presenton_deck_save_slide
+    - presenton_deck_update_slide
+    - presenton_deck_delete_slide
+    - presenton_deck_set_presentation_theme
+    - presenton_deck_add_outline
+    - presenton_deck_update_outline
+    - presenton_deck_delete_outline
+    # Deck Smart (HTML)
+    - presenton_deck_smart_get_smart_presentation_context
+    - presenton_deck_smart_search_slide
+    - presenton_deck_smart_get_slide_at_index
+    - presenton_deck_smart_read_source_documents
+    - presenton_deck_smart_save_slide
+    - presenton_deck_smart_delete_slide
   requires: [image_generation]
   examples: >-
     CONTRATO — PRESENTON (autonomía media):
-    1) presenton_generate_presentation (o _async + poll) con el brief.
-    2) Artefacto handler=presenton; el editor es el embed.
-    3) Retocar desde el iframe = turno en este agente (no CUSTOM_LLM).
-       get_presentation → edit_slide / update_slide. Imágenes: generate_image
-       (hub Brain) y luego update_slide. No regeneres el deck.
-    4) Export PPTX/PDF = presenton_export_presentation.
+    1) Crear: presenton_create_presentation UNA vez con el brief (content,
+       n_slides, language, tone, instructions). El artefacto handler=presenton
+       se abre solo en la pantalla de esquema: el usuario elige plantilla,
+       revisa el outline y pulsa Generate. No esperes ni hagas poll: dile que
+       revise el esquema en el editor. Solo si pide expresamente generarla
+       sin revisar: presenton_generate_presentation_async y como mucho un
+       poll de estado (tarda minutos; el editor la muestra al terminar).
+    2) Retocar: nunca regeneres. Lee (deck_get_slide_at_index /
+       deck_search_slide) y cambia lo mínimo (deck_update_element,
+       deck_add_component, deck_update_component…). Slide N del usuario =
+       index N-1. Pasa user_request con el pedido literal.
+    3) Deck smart (generation_mode=smart): solo presenton_deck_smart_*.
+       Si una tool responde 409, usa la operación que indica.
+    4) Imágenes: generate_image (hub Brain) y luego deck_update_element /
+       deck_add_component con la URL devuelta.
+    5) Export PPTX/PDF: presenton_export_presentation, solo si lo piden.
     NUNCA slides_begin/slides_add/slides_finalize para este contrato.

@@ -8,17 +8,17 @@ outcome: artifact
 panel_id: slides
 handler: presenton
 autonomy: collaborate
-agent_id: presenton_designer
 capabilities: [presentation_presenton]
 seed_prompt: >-
   Contrato: PRESENTACIÓN COLABORATIVA (autonomía media, handler presenton).
-  Genera el deck UNA sola vez con presenton_generate_presentation
-  (o _async + poll hasta completed). No relances generate si ya hay
-  presentation_id. El artefacto nace con handler=presenton; el usuario
-  lo ve en el embed. No uses slides_begin/slides_add/slides_finalize
-  ni OnlyOffice para crear. Pregúntame audiencia, número de slides y tono, y genera.
+  Carga la capability presentation_presenton. Crea el deck UNA sola vez con
+  presenton_create_presentation: se abre el editor en el esquema y yo elijo
+  plantilla, reviso el outline y genero. No relances la creación si ya hay
+  presentation_id: los retoques van con las tools presenton_deck_*. No uses
+  slides_begin/slides_add/slides_finalize ni OnlyOffice. Pregúntame audiencia,
+  número de slides y tono, y crea el deck.
 payload:
-  tool: presenton_generate_presentation
+  tool: presenton_create_presentation
   handler: presenton
   autonomy: collaborate
 tags: [Autonomía media]

@@ -1,57 +1,152 @@
 ---
 name: presenton_layouts
 description: >-
-  Cómo generar e iterar un deck en Presenton: standard vs smart, layouts,
-  export, y qué no tocar (HTML Reveal legado).
+  Cómo crear y retocar un deck en Presenton: generar una vez, descubrir antes
+  de editar, cambiar lo mínimo con las tools presenton_deck_*, charts, tablas,
+  infográficos, imágenes y export.
 metadata:
   category: media
-  agent: presenton_designer
-  display-name: "Layouts Presenton"
+  display-name: "Presenton: crear y retocar decks"
 ---
 
-# Presenton — layouts y flujo
+# Presenton — crear y retocar decks
 
-## Dos modos de generación
-
-| Modo | Cuándo | Qué produce |
-|---|---|---|
-| **standard** (default) | Control de layout, marca, iteración visual | JSON Template V2 + editor Konva |
-| **smart** | Brief abierto, datos/charts, menos plantilla | HTML/Tailwind + Chart.js |
-
-Si el usuario no pide lo contrario, usa **standard**.
+Trabajas directamente sobre el deck con las tools `presenton_deck_*`. Presenton
+no razona: tú decides qué tocar. El usuario ve el resultado en el editor
+(embebido en Brain o abierto en Presenton).
 
 ## Crear ≠ retocar
 
-- **Crear:** `presenton_generate_presentation` (o async + poll).
-- **Retocar:** tools de update/export de Presenton sobre el `external_id` del artefacto. No regeneres el deck para cambiar un titular.
+- **Crear:** `presenton_create_presentation` **una sola vez** con el brief
+  (`content`, `n_slides`, `language`, `tone`, `instructions`). El artefacto
+  `handler=presenton` se registra y se abre solo, en la pantalla de esquema:
+  el usuario elige plantilla, revisa o edita el outline y pulsa *Generate*.
+  No hagas poll ni esperes: dile que revise el esquema en el editor. No
+  inventes enlaces.
+- **Generar sin revisar** (solo si lo pide expresamente):
+  `presenton_generate_presentation_async`. Tarda varios minutos; el editor
+  muestra "Generating…" y abre el deck al terminar. Como mucho un poll con
+  `presenton_get_presentation_generation_status`; no lo repitas en bucle.
+- **Retocar:** nunca regeneres el deck para cambiar un titular, un dato o un
+  color. Usa las tools `presenton_deck_*` sobre el `external_id` del artefacto
+  (`presentation_id`).
+- **Export:** `presenton_export_presentation` (PPTX/PDF), solo si lo piden.
 
-## Artefacto
+## Dos tipos de deck
 
-El deck vive en Presenton. Brain guarda un puntero:
+| `generation_mode` | Qué es | Tools |
+|---|---|---|
+| `standard` (por defecto) | Template V2: slides JSON con componentes y elementos | `presenton_deck_*` |
+| `smart` | Cada slide es un fragmento HTML completo | `presenton_deck_smart_*` |
 
-- `handler: presenton`
-- `existing_uri: presenton://deck/<id>`
-- `mime: application/vnd.brain.presentation+json`
+Si una tool responde **409**, el deck es del otro tipo: el mensaje dice qué
+operación usar. Para crear, usa `standard` salvo que el brief pida lo contrario.
 
-No conviertas eso a `presentations/*.html` de Reveal.
+## Reglas comunes
 
-## Export
+- Slide N del usuario = `index` N-1. Al contestar, habla en números de slide.
+- Pasa siempre `presentation_id` y, en las tools que editan, `user_request`
+  con el pedido literal del usuario (algunas tools infieren de ahí el título
+  de un chart o los datos de una tabla).
+- Las respuestas vienen como `{ok, result}` o `{ok: false, error, recovery}`.
+  Un cambio solo está hecho si `ok` es `true` y el resultado dice saved, added,
+  updated o deleted. Si falla, sigue la `recovery`; no repitas el mismo JSON.
+- Lo que devuelven las tools en este turno manda sobre lo que recuerdes.
+- No inventes datos, URLs de imagen ni nombres de tema.
 
-PPTX y PDF salen de Presenton (`presenton_export_presentation` o la acción del handler). No uses `POST /artifacts/{id}/export/pptx` del core (eso es HTML legado).
+## Deck estándar: descubrir antes de editar
 
-## HTML legado (`slides-html`)
+1. `presenton_deck_get_template_summary` antes de elegir layout o un cambio
+   amplio de deck.
+2. `presenton_deck_search_slide` si el usuario cita un tema o un texto pero no
+   un número de slide.
+3. `presenton_deck_get_slide_at_index` **antes de cualquier cambio visible**:
+   da los ids de componente y los `elementPath`. Usa
+   `includeFullContent=true` si necesitas el JSON exacto.
+4. `presenton_deck_read_source_documents` si piden algo del PDF/documento
+   subido al deck.
 
-Decks antiguos en Reveal se abren con el handler builtin. No los migres a Presenton salvo que el usuario lo pida explícitamente (sería una generación nueva, no una conversión fiel).
+## Deck estándar: cambiar lo mínimo
+
+- **Texto, estilo, geometría** de un elemento → `presenton_deck_update_element`
+  (font, color, alignment, fill, stroke, position, size, chart, tableCell…).
+- **Mover, redimensionar, duplicar, capas, agrupar** un bloque entero →
+  `presenton_deck_update_component`.
+- **Añadir** → antes, `presenton_deck_get_available_blocks` para reutilizar un
+  bloque con el estilo de la plantilla; luego `presenton_deck_add_component`
+  con el JSON del bloque adaptado. `presenton_deck_add_element` solo si no hay
+  bloque adecuado.
+- **Borrar** (`delete_element`, `delete_component`, `delete_slide`) solo si lo
+  piden o si sustituyes exactamente ese elemento.
+- Añadir es aditivo: conserva charts, tablas, imágenes y textos existentes.
+- Todo dentro del lienzo 1280×720.
+
+## Slides completas
+
+- Slide nueva con layout: `presenton_deck_get_available_layouts` →
+  `presenton_deck_get_content_schema_from_layout_id` →
+  `presenton_deck_add_new_slide_layout` con el **contenido final** de cada
+  campo (nada de placeholders).
+- Slide en blanco: `presenton_deck_add_new_slide`, y se compone con bloques.
+- `save_slide` / `update_slide` solo para reemplazar el contenido entero de una
+  slide; no para retoques pequeños.
+
+## Charts
+
+- Chart real, nunca una imagen. Respeta etiquetas y números del usuario.
+- Modelo: `chartType`, `title`, `categories`, `series[].values`, `colors`,
+  ejes, `dataLabels` (null, base, mid, top, outside) y leyenda.
+- Tipos: bar, horizontal_bar, stacked_bar, horizontal_stacked_bar, line, area,
+  pie, donut, scatter, bubble, radar, polar_area, ibcs_kpi.
+- Cada `series.values` tan largo como `categories`. Pie/donut: una serie.
+- Sin colores del usuario, omite `colors` y se aplica el tema.
+- Cambiar un chart existente: `presenton_deck_update_element` con `chart`.
+
+## Tablas
+
+- Tabla real (`type="table"` con columnas/cabeceras y filas), con los valores
+  exactos del usuario. Nunca un shell vacío si el pedido trae datos.
+
+## Infográficos y formas
+
+- `presenton_deck_get_available_infographics` primero; después
+  `presenton_deck_add_infographic` con el tipo y los datos exactos del catálogo.
+- Líneas y formas: siempre `type="vector"` (los puntos definen la geometría).
+- Ecuaciones: texto con `<latex>…</latex>`.
 
 ## Imágenes
 
-Portadas e ilustraciones: capability `image_generation` del hub Brain, luego pásalas a Presenton (`presenton_update_slide` / `presenton_edit_slide`). No dejes placeholders inventados.
+- Generar: carga `image_generation` y usa `generate_image` del hub de Brain.
+- Insertar: `presenton_deck_update_element` (cambiar una existente) o
+  `presenton_deck_add_component` / `add_element` con `type="image"` y la URL
+  devuelta en `data`.
 
-## Pedidos desde el iframe
+## Tema y outline
 
-El generate del editor embebido **no** usa el LLM de Presenton. Llega como turno tuyo (chat de la mesa) con `presentation_id` / slide visible. Entonces:
+- `presenton_deck_get_presentation_theme` / `set_presentation_theme` solo si el
+  usuario pide cambiar el tema. Nunca como efecto lateral.
+- Outline (antes de generar slides): `presenton_deck_add_outline`,
+  `update_outline`, `delete_outline`.
 
-1. `presenton_get_presentation` con ese id.
-2. Cambio local: `presenton_edit_slide` (prompt) o `presenton_update_slide`.
-3. Imagen: `generate_image` del hub y sustituye el asset en la slide.
-4. No llames `presenton_generate_presentation` para un retoque.
+## Deck Smart (HTML)
+
+1. `presenton_deck_smart_get_smart_presentation_context` para cambios de deck,
+   de estilo o slides nuevas.
+2. `presenton_deck_smart_get_slide_at_index` con `includeFullContent=true`
+   antes de editar: ese HTML manda.
+3. `presenton_deck_smart_save_slide` con **un fragmento HTML completo**
+   (`replaceOldSlideAtIndex=true` para editar, `false` para insertar). Raíz:
+   un `<section>` con `relative h-[720px] w-[1280px] overflow-hidden`.
+4. Conserva scripts, canvas de Chart.js, URLs, tipografía y paleta. Cada chart
+   necesita su `<canvas>` con id único y su script `new Chart(...)` inline.
+5. Nada fuera del lienzo, sin scroll ni texto recortado.
+
+## Pedidos que llegan desde el editor
+
+Cuando el turno trae `presentation_id` y la slide visible (o la selección), el
+usuario está mirando el deck: lee esa slide y retoca. No regeneres.
+
+## Al terminar
+
+Una o dos frases: qué cambió y en qué slide. Si algo bloqueó, di exactamente
+qué falta.

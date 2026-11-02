@@ -1,13 +1,15 @@
 id: creative-presenton
 name: "Creative: Presenton"
-version: 0.2.0
+version: 0.5.0
 description: >-
   Presentación colaborativa (autonomía media): runtime Presenton, capability
-  presentation_presenton, agente presenton_designer y plantilla de
-  «Crear artefacto». No sustituye Reveal ni OnlyOffice; convive con
-  creative-slides y office-pptx.
+  presentation_presenton, handler del editor embebido y plantilla de
+  «Crear artefacto». Sin agente propio: Khai carga la capability (o la pasa a
+  un spawn_agent para aislar o paralelizar). No sustituye Reveal ni
+  OnlyOffice; convive con creative-slides y office-pptx.
 
-  Las tools presenton_* salen de la conexión OpenAPI del servicio.
-  Imagen registry.khlloreda.es/presenton:0.1.2.
+  Las tools presenton_* (generar, exportar) y presenton_deck_* (retoque fino
+  de slides) salen de la conexión OpenAPI del servicio.
+  Imagen registry.khlloreda.es/presenton:0.1.3.
 requires: []
 requires_brain: ">=3.1.0"
