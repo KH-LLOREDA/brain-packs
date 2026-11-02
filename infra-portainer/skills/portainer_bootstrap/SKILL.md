@@ -28,8 +28,10 @@ Brain (tools portainer_*)  →  proxy-portainer  →  Portainer (uno o varios se
                                 └─ tabla de "instancias" (URL + API key por servidor)
 ```
 
-- **Brain ↔ proxy**: ya resuelto por el pack. El API token se generó en la
-  instalación y vive en la conexión OpenAPI `portainer` (no hay que tocarlo).
+- **Brain ↔ proxy**: ya resuelto por el pack. Hay un **único** token: Brain lo
+  generó en la instalación, lo inyecta al proxy (`PROXY_PORTAINER_TOKEN`) y lo
+  guarda en la conexión OpenAPI `portainer`. No hay que tocarlo, y el proxy
+  rechaza generar o desactivar tokens (409).
 - **proxy ↔ Portainer**: es lo que configuramos aquí, con las tools
   `portainer_*Instance`. Cada "instancia" es un servidor Portainer con su URL y
   su API key.
@@ -88,3 +90,11 @@ Las tools de lectura/admin aceptan seleccionar el Portainer destino:
   sabes, sácalo de `portainer_listEnvironments`.
 - Si `portainer_listEnvironments` da "sin instancia activa", falta el alta:
   sigue esta skill. No es un fallo del token Brain↔proxy.
+- Si una tool `portainer_*` da **401** ("Token inválido o inactivo"), el fallo
+  es del token Brain↔proxy: **no** generes tokens, no llames a
+  `/api/auth/*` y no cambies el token de la conexión (Brain lo rechaza). Dile al
+  admin que reinstale/actualice el pack `infra-portainer`, que vuelve a desplegar
+  el proxy con el token guardado en Brain. Mientras, no reintentes en bucle.
+- Un **timeout** o un 500 que menciona una instancia apunta a un Portainer
+  inalcanzable, no al token: indica `instance=<slug>` de una instancia que
+  responda (`portainer_listActiveInstances` + `portainer_testInstance`).
