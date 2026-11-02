@@ -1,6 +1,6 @@
 slug: presenton
 # Imagen propia (nginx + API + Next + Chromium). Tag = versión del pack.
-image: registry.khlloreda.es/presenton:0.1.2
+image: registry.khlloreda.es/presenton:0.1.3
 ports: [80]
 # Token que Brain genera e inyecta: Bearer de la API y firma de embeds.
 # LLM/CUSTOM_* las rellena el instalador desde el modelo por defecto de Brain
@@ -35,5 +35,7 @@ provides:
     slug: presenton
     name: Presenton
     spec_path: /openapi.json
-    auth_type: bearer
+    # Cada llamada va firmada como el usuario de Brain (su email de Keycloak),
+    # no como un servicio compartido.
+    auth_type: embed_user
     auth_token_env: PRESENTON_EMBED_SECRET
