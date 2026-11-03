@@ -134,6 +134,11 @@ guarda en la galería del usuario (diálogo *Change image → Your images*).
 - **Insertar:** `presenton_deck_update_element` sobre la imagen existente
   (cambia `data`) o `add_element`/`add_component` con `type="image"` y esa URL.
 - **Iconos:** mismo tool con `kind:"icon"` (busca en la librería de iconos).
+- **Modelo:** por defecto `model: null` (modelo por defecto de Presenton). Solo
+  si el usuario nombra uno, pásalo en el asset (`model`) o en
+  `animate_image_async` (`model`). Tiene que estar habilitado en Settings
+  (Image/Video Provider); si no, la tool responde 400 con la lista válida:
+  usa una de esas o el default, no insistas.
 - **Vídeo (animar una imagen):** primero ten la imagen en la slide (paso
   anterior). Luego `presenton_animate_image_async` con `image_url` (la URL de
   la galería), `prompt` del movimiento, `presentation_id` y `slide_index`.
