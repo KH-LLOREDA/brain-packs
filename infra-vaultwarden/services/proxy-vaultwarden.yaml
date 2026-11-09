@@ -2,7 +2,7 @@ slug: proxy-vaultwarden
 # El pack despliega el proxy. La conexión no lleva un hostname fijo: el
 # instalador usa la URL que devuelve el workspace-manager (host + puerto
 # publicado). El nombre del contenedor no forma parte del contrato.
-image: registry.khlloreda.es/proxy-vaultwarden:latest
+image: registry.khlloreda.es/proxy-vaultwarden:0.1.3
 ports: [3001]
 # La imagen escucha en 127.0.0.1 si HOST no está. El puerto publicado del
 # host llega por la interfaz del contenedor, así que hay que abrir 0.0.0.0.
@@ -12,9 +12,11 @@ environment:
   NODE_ENV: production
   LOG_LEVEL: info
   LOG_FORMAT: json
-# El bearer de Brain hacia el proxy se rellena en la conexión OpenAPI.
+# PROXY_VW_TOKEN lo genera Brain al instalar y lo guarda en la conexión OpenAPI;
+# el proxy lo registra al arrancar con scope brain. Sin él, todo es auth_invalid.
 # La cuenta de Vaultwarden es por usuario (tipo vaultwarden en Mis conexiones).
-env: []
+env: [PROXY_VW_TOKEN]
+generate_secrets: [PROXY_VW_TOKEN]
 healthcheck:
   path: /health
   port: 3001
