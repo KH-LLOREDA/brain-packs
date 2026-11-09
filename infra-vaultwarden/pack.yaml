@@ -1,6 +1,6 @@
 id: infra-vaultwarden
 name: "Infra: Vaultwarden"
-version: 1.2.0
+version: 1.2.1
 description: >-
   Despliega proxy-vaultwarden como servicio del entorno y cablea su conexión
   OpenAPI con la URL que devuelve el despliegue (sin hostname fijo). Añade la
