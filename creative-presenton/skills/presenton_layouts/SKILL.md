@@ -1,9 +1,10 @@
 ---
 name: presenton_layouts
 description: >-
-  Cómo crear y retocar un deck en Presenton: generar una vez, descubrir antes
-  de editar, cambiar lo mínimo con las tools presenton_deck_*, charts, tablas,
-  infográficos, imágenes y export.
+  Cómo crear y retocar un deck en Presenton: escribir el esquema con el layout
+  de cada slide elegido por su capacidad (plantilla por defecto), descubrir
+  antes de editar, cambiar lo mínimo con las tools presenton_deck_*, charts,
+  tablas, infográficos, imágenes y export.
 metadata:
   category: media
   display-name: "Presenton: crear y retocar decks"
@@ -15,20 +16,61 @@ Trabajas directamente sobre el deck con las tools `presenton_deck_*`. Presenton
 no razona: tú decides qué tocar. El usuario ve el resultado en el editor
 (embebido en Brain o abierto en Presenton).
 
-## Crear ≠ retocar
+## Crear: tú escribes el esquema y eliges el layout de cada slide
 
-- **Crear:** `presenton_create_presentation` **una sola vez** con el brief
-  (`content`, `n_slides`, `language`, `tone`, `instructions`). El artefacto
-  `handler=presenton` se registra y se abre solo, en la pantalla de esquema
-  con la plantilla ya aplicada: el usuario revisa o edita el outline, puede
-  cambiar la plantilla (*Change template*) y pulsa *Generate*. No hagas poll
-  ni esperes: dile que revise el esquema en el editor. No inventes enlaces.
-- **Plantilla:** `template` es opcional. Pásala solo si el usuario nombra una
-  o el tema encaja claramente con una (p. ej. una corporativa para un informe
-  interno): consulta `presenton_template_list` **una vez** (nombre y
-  descripción) y pasa el `name` o el `id`. Si no, omítela: se aplica la
-  plantilla por defecto de la instancia. Un nombre desconocido devuelve 400;
-  no reintentes a ciegas, vuelve a mirar la lista.
+Tú tienes el contexto (lo investigado, los documentos, lo que ha pedido el
+usuario); Presenton solo aplica el formato. Por eso el esquema lo escribes tú,
+con el layout de cada slide decidido, y el usuario lo revisa antes de generar.
+
+1. **Catálogo:** `presenton_template_layout_catalog` **sin** `template` (se usa
+   la plantilla por defecto; no preguntes ni elijas plantilla salvo que el
+   usuario nombre una). Devuelve `template` (su id) y, por layout: `id`,
+   `role` (cover, section, toc, close, content), `description`, `capacity`
+   (qué contiene: nº de elementos, campos y longitudes) y `needs` (numbers,
+   table, image…).
+2. **Planifica slide a slide** antes de escribir:
+   - Forma del contenido → layout cuyo `capacity` encaje: 3 ideas paralelas →
+     un layout de 3 elementos; 2–4 cifras clave → fila de KPIs; serie numérica
+     → gráfico; datos tabulares → tabla; comparación o antes/después → dos
+     columnas; pasos o próximos pasos → lista.
+   - Roles: `cover` solo en la primera (portada), `close` solo en la última,
+     `toc` solo para una agenda, `section` solo para un separador corto que
+     abre un bloque, nunca para una slide con contenido.
+   - Variedad: no repitas el mismo layout en slides seguidas salvo que el
+     contenido tenga de verdad la misma forma.
+3. **Escribe el contenido ajustado a ese layout**, para la audiencia (markdown,
+   `## Título`, ≤100 palabras, sin instrucciones de diseño): tantos elementos
+   como admite el layout, longitudes dentro de los límites, cifras reales con
+   su fuente (las que has obtenido; no inventes). `layout_reason`: una frase
+   con la forma del contenido y por qué encaja ("4 cifras con fuente: fila de
+   KPIs"). Se le muestra al usuario.
+4. **Crea una sola vez:** `presenton_create_presentation` con `content` (brief:
+   tema y público), `language`, `tone`, `instructions` (estilo general),
+   `template` = el `template` del catálogo y
+   `outlines = [{content, layout, layout_reason}, …]`. Un **422** devuelve
+   `invalid` (slides con un layout que no existe) y `valid_layouts`: corrige
+   esas slides y reintenta una vez.
+5. El artefacto `handler=presenton` se abre solo en la pantalla de esquema,
+   con el layout previsto y el motivo en cada slide. El usuario revisa, puede
+   cambiar layouts o la plantilla y pulsa *Generate*. No hagas poll ni esperes:
+   dile que revise el esquema. No inventes enlaces.
+
+### Cambio de plantilla
+
+Los ids de layout son de cada plantilla: al cambiarla hay que replanificar.
+
+- **Lo pide el usuario antes de generar:** `presenton_template_layout_catalog`
+  con esa `template`, vuelve a elegir el layout de cada slide (y ajusta el
+  contenido si cambia la capacidad) y guarda con `presenton_update_outline`
+  (`id`, `template`, `slides=[{content, layout, layout_reason}]`).
+- **La cambia en el editor:** Presenton replanifica solo los layouts. Si te pide
+  revisarlo, lee el esquema (`presenton_get_outline`), corrige lo que no
+  encaje y guarda con `presenton_update_outline`.
+- `presenton_outline_plan_layouts` deja que Presenton elija los layouts que
+  falten (o todos con `keep_existing=false`); úsalo solo si el usuario lo pide.
+
+## Generar, retocar y exportar
+
 - **Generar sin revisar** (solo si lo pide expresamente):
   `presenton_generate_presentation_async`. Tarda varios minutos; el editor
   muestra "Generating…" y abre el deck al terminar. Como mucho un poll con

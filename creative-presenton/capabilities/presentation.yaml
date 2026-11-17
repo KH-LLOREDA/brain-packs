@@ -13,9 +13,13 @@
   auto_load: false
   skills: [presenton_layouts]
   tools:
-    # Crear (outline revisable en el editor), leer, exportar
+    # Crear: catálogo de layouts de la plantilla, esquema con layout por slide
+    - presenton_template_layout_catalog
     - presenton_template_list
     - presenton_create_presentation
+    - presenton_get_outline
+    - presenton_update_outline
+    - presenton_outline_plan_layouts
     - presenton_generate_presentation_async
     - presenton_get_presentation_generation_status
     - presenton_get_presentation
@@ -62,16 +66,18 @@
     - presenton_deck_smart_generate_assets
   examples: >-
     CONTRATO — PRESENTON (autonomía media):
-    1) Crear: presenton_create_presentation UNA vez con el brief (content,
-       n_slides, language, tone, instructions). Plantilla: si el usuario la
-       nombra o el tema pide una concreta, pasa template (nombre o id de
-       presenton_template_list, una sola consulta); si no, omítela y se usa
-       la plantilla por defecto. El artefacto handler=presenton se abre solo
-       en el esquema ya con la plantilla aplicada: el usuario revisa el
-       outline, puede cambiar la plantilla y pulsa Generate. No esperes ni
-       hagas poll: dile que revise el esquema. Solo si pide expresamente generarla
-       sin revisar: presenton_generate_presentation_async y como mucho un
-       poll de estado (tarda minutos; el editor la muestra al terminar).
+    1) Crear: tú escribes el esquema y eliges el layout de cada slide.
+       presenton_template_layout_catalog (sin template = plantilla por
+       defecto) → planifica cada slide con su contenido final y el layout cuyo
+       "holds" encaje → presenton_create_presentation UNA vez con content
+       (brief), language, tone, instructions, template (id del catálogo) y
+       outlines=[{content, layout, layout_reason}]. Un 422 lista invalid y
+       valid_layouts: corrige y reintenta una vez. El editor abre el esquema con
+       el layout previsto y su motivo; el usuario lo revisa y pulsa Generate.
+       No hagas poll. Otra plantilla antes de generar: catálogo de esa
+       plantilla, replanifica y presenton_update_outline(template=…). Solo si
+       pide generarla sin revisar: presenton_generate_presentation_async y como
+       mucho un poll de estado.
     2) Retocar: nunca regeneres. Lee (deck_get_slide_at_index /
        deck_search_slide) y cambia lo mínimo (deck_update_element,
        deck_add_component, deck_update_component…). Slide N del usuario =
